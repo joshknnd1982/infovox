@@ -1,0 +1,92 @@
+2026-08-04 13:06:24,830 DEBUG CoInitializeEx(None, 2)
+2026-08-04 13:06:24,830 INFO keep-registry: using existing engine registry config as-is
+2026-08-04 13:06:34,860 DEBUG Release <POINTER(IClassFactory) ptr=0x4105d00 at 3dd04e0>
+2026-08-04 13:06:34,861 INFO Engine loaded via direct DllGetClassObject.
+2026-08-04 13:06:34,861 INFO mode: name='American English Child' product='Infovox 230' speaker='American English Child' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='American English Female' product='Infovox 230' speaker='American English Female' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='American English Giant' product='Infovox 230' speaker='American English Giant' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='American English Male' product='Infovox 230' speaker='American English Male' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='American English Zombie' product='Infovox 230' speaker='American English Zombie' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='British English Child' product='Infovox 230' speaker='British English Child' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='British English Female' product='Infovox 230' speaker='British English Female' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='British English Giant' product='Infovox 230' speaker='British English Giant' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='British English Male' product='Infovox 230' speaker='British English Male' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='British English Zombie' product='Infovox 230' speaker='British English Zombie' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Castilian Spanish Child' product='Infovox 230' speaker='Castilian Spanish Child' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Castilian Spanish Female' product='Infovox 230' speaker='Castilian Spanish Female' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Castilian Spanish Giant' product='Infovox 230' speaker='Castilian Spanish Giant' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Castilian Spanish Male' product='Infovox 230' speaker='Castilian Spanish Male' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Castilian Spanish Zombie' product='Infovox 230' speaker='Castilian Spanish Zombie' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Danish Child' product='Infovox 230' speaker='Danish Child' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Danish Female' product='Infovox 230' speaker='Danish Female' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Danish Giant' product='Infovox 230' speaker='Danish Giant' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Danish Male' product='Infovox 230' speaker='Danish Male' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Danish Zombie' product='Infovox 230' speaker='Danish Zombie' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Dutch Child' product='Infovox 230' speaker='Dutch Child' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Dutch Female' product='Infovox 230' speaker='Dutch Female' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Dutch Giant' product='Infovox 230' speaker='Dutch Giant' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Dutch Male' product='Infovox 230' speaker='Dutch Male' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,861 INFO mode: name='Dutch Zombie' product='Infovox 230' speaker='Dutch Zombie' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Finnish Child' product='Infovox 230' speaker='Finnish Child' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Finnish Female' product='Infovox 230' speaker='Finnish Female' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Finnish Giant' product='Infovox 230' speaker='Finnish Giant' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Finnish Male' product='Infovox 230' speaker='Finnish Male' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Finnish Zombie' product='Infovox 230' speaker='Finnish Zombie' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='French Child' product='Infovox 230' speaker='French Child' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='French Female' product='Infovox 230' speaker='French Female' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='French Giant' product='Infovox 230' speaker='French Giant' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='French Male' product='Infovox 230' speaker='French Male' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='French Zombie' product='Infovox 230' speaker='French Zombie' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='German Child' product='Infovox 230' speaker='German Child' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='German Female' product='Infovox 230' speaker='German Female' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='German Giant' product='Infovox 230' speaker='German Giant' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='German Male' product='Infovox 230' speaker='German Male' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='German Zombie' product='Infovox 230' speaker='German Zombie' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Icelandic Child' product='Infovox 230' speaker='Icelandic Child' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Icelandic Female' product='Infovox 230' speaker='Icelandic Female' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Icelandic Giant' product='Infovox 230' speaker='Icelandic Giant' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Icelandic Male' product='Infovox 230' speaker='Icelandic Male' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Icelandic Zombie' product='Infovox 230' speaker='Icelandic Zombie' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Italian Child' product='Infovox 230' speaker='Italian Child' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Italian Female' product='Infovox 230' speaker='Italian Female' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Italian Giant' product='Infovox 230' speaker='Italian Giant' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Italian Male' product='Infovox 230' speaker='Italian Male' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Italian Zombie' product='Infovox 230' speaker='Italian Zombie' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Norwegian Child' product='Infovox 230' speaker='Norwegian Child' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Norwegian Female' product='Infovox 230' speaker='Norwegian Female' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Norwegian Giant' product='Infovox 230' speaker='Norwegian Giant' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Norwegian Male' product='Infovox 230' speaker='Norwegian Male' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Norwegian Zombie' product='Infovox 230' speaker='Norwegian Zombie' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Swedish Child' product='Infovox 230' speaker='Swedish Child' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Swedish Female' product='Infovox 230' speaker='Swedish Female' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Swedish Giant' product='Infovox 230' speaker='Swedish Giant' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Swedish Male' product='Infovox 230' speaker='Swedish Male' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,862 INFO mode: name='Swedish Zombie' product='Infovox 230' speaker='Swedish Zombie' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:06:34,887 DEBUG <__main__.CaptureAudio object at 0x03DD19F0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:06:34,887 DEBUG 1 active COM objects: Added   <__main__.CaptureAudio object at 0x03DD19F0>
+2026-08-04 13:06:34,887 DEBUG <__main__.CaptureAudio object at 0x03DD19F0>.AddRef() -> 1
+2026-08-04 13:06:34,888 DEBUG <__main__.CaptureAudio object at 0x03DD19F0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:06:34,888 DEBUG <__main__.CaptureAudio object at 0x03DD19F0>.AddRef() -> 2
+2026-08-04 13:06:34,894 DEBUG Release <POINTER(IErrorInfo) ptr=0x20acb88 at 3ddb6c0>
+2026-08-04 13:06:34,894 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x20acb8c at 3ddb670>
+2026-08-04 13:06:34,894 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:06:34,896 DEBUG 2 active COM objects: Added   <__main__.TTSNotifySink object at 0x03CF1CB0>
+2026-08-04 13:06:34,896 DEBUG <__main__.TTSNotifySink object at 0x03CF1CB0>.AddRef() -> 1
+2026-08-04 13:06:34,896 DEBUG <__main__.TTSNotifySink object at 0x03CF1CB0>.AddRef() -> 2
+2026-08-04 13:06:34,896 INFO Selected mode {C9C5EDA0-7C89-11D0-0300-030000000000} (features=0x19f)
+2026-08-04 13:06:34,897 DEBUG 3 active COM objects: Added   <__main__.BufNotifySink object at 0x03DD5D50>
+2026-08-04 13:06:34,897 DEBUG <__main__.BufNotifySink object at 0x03DD5D50>.AddRef() -> 1
+2026-08-04 13:06:34,897 DEBUG <__main__.BufNotifySink object at 0x03DD5D50>.AddRef() -> 2
+2026-08-04 13:06:37,145 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x3ddbf58 at 40243a0>
+2026-08-04 13:06:37,145 DEBUG <__main__.BufNotifySink object at 0x03DD5D50>.Release() -> 1
+2026-08-04 13:06:37,147 DEBUG Release <POINTER(ITTSEnumW) ptr=0x4105d30 at 3dd0530>
+2026-08-04 13:06:37,148 DEBUG Release <POINTER(ITTSCentralW) ptr=0x4450124 at 3ddb580>
+2026-08-04 13:06:37,148 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x445011c at 3ddbd00>
+2026-08-04 13:06:37,149 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x445021c at 3ddb620>
+2026-08-04 13:06:37,149 DEBUG <__main__.CaptureAudio object at 0x03DD19F0>.Release() -> 1
+2026-08-04 13:06:37,149 DEBUG <__main__.CaptureAudio object at 0x03DD19F0>.Release() -> 0
+2026-08-04 13:06:37,149 DEBUG 2 active COM objects: Removed <__main__.CaptureAudio object at 0x03DD19F0>
+2026-08-04 13:06:37,149 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x03CF1CB0>, <__main__.BufNotifySink object at 0x03DD5D50>]
+2026-08-04 13:06:37,151 DEBUG <__main__.TTSNotifySink object at 0x03CF1CB0>.Release() -> 1
+2026-08-04 13:06:37,152 DEBUG Calling CoUninitialize()
+2026-08-04 13:06:37,152 DEBUG CoUninitialize() done.

@@ -1,0 +1,495 @@
+2026-08-04 13:18:19,218 DEBUG CoInitializeEx(None, 2)
+2026-08-04 13:18:19,220 INFO keep-registry: using existing engine registry config as-is
+2026-08-04 13:18:29,300 DEBUG Release <POINTER(IClassFactory) ptr=0x40e5ca0 at 3d91580>
+2026-08-04 13:18:29,300 INFO Engine loaded via direct DllGetClassObject.
+2026-08-04 13:18:29,300 INFO mode: name='American English Child' product='Infovox 230' speaker='American English Child' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='American English Female' product='Infovox 230' speaker='American English Female' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='American English Giant' product='Infovox 230' speaker='American English Giant' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='American English Male' product='Infovox 230' speaker='American English Male' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='American English Zombie' product='Infovox 230' speaker='American English Zombie' langID=0x0409 gModeID={C9C5EDA0-7C89-11D0-0300-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='British English Child' product='Infovox 230' speaker='British English Child' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='British English Female' product='Infovox 230' speaker='British English Female' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='British English Giant' product='Infovox 230' speaker='British English Giant' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='British English Male' product='Infovox 230' speaker='British English Male' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='British English Zombie' product='Infovox 230' speaker='British English Zombie' langID=0x0809 gModeID={C9C5EDA0-7C89-11D0-0301-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Castilian Spanish Child' product='Infovox 230' speaker='Castilian Spanish Child' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Castilian Spanish Female' product='Infovox 230' speaker='Castilian Spanish Female' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Castilian Spanish Giant' product='Infovox 230' speaker='Castilian Spanish Giant' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Castilian Spanish Male' product='Infovox 230' speaker='Castilian Spanish Male' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Castilian Spanish Zombie' product='Infovox 230' speaker='Castilian Spanish Zombie' langID=0x000a gModeID={C9C5EDA0-7C89-11D0-030C-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Danish Child' product='Infovox 230' speaker='Danish Child' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Danish Female' product='Infovox 230' speaker='Danish Female' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Danish Giant' product='Infovox 230' speaker='Danish Giant' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Danish Male' product='Infovox 230' speaker='Danish Male' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Danish Zombie' product='Infovox 230' speaker='Danish Zombie' langID=0x0006 gModeID={C9C5EDA0-7C89-11D0-0302-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Dutch Child' product='Infovox 230' speaker='Dutch Child' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Dutch Female' product='Infovox 230' speaker='Dutch Female' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Dutch Giant' product='Infovox 230' speaker='Dutch Giant' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,300 INFO mode: name='Dutch Male' product='Infovox 230' speaker='Dutch Male' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Dutch Zombie' product='Infovox 230' speaker='Dutch Zombie' langID=0x0013 gModeID={C9C5EDA0-7C89-11D0-0304-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Finnish Child' product='Infovox 230' speaker='Finnish Child' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Finnish Female' product='Infovox 230' speaker='Finnish Female' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Finnish Giant' product='Infovox 230' speaker='Finnish Giant' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Finnish Male' product='Infovox 230' speaker='Finnish Male' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Finnish Zombie' product='Infovox 230' speaker='Finnish Zombie' langID=0x000b gModeID={C9C5EDA0-7C89-11D0-0305-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='French Child' product='Infovox 230' speaker='French Child' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='French Female' product='Infovox 230' speaker='French Female' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='French Giant' product='Infovox 230' speaker='French Giant' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='French Male' product='Infovox 230' speaker='French Male' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='French Zombie' product='Infovox 230' speaker='French Zombie' langID=0x000c gModeID={C9C5EDA0-7C89-11D0-0306-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='German Child' product='Infovox 230' speaker='German Child' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='German Female' product='Infovox 230' speaker='German Female' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='German Giant' product='Infovox 230' speaker='German Giant' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='German Male' product='Infovox 230' speaker='German Male' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='German Zombie' product='Infovox 230' speaker='German Zombie' langID=0x0007 gModeID={C9C5EDA0-7C89-11D0-0307-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Icelandic Child' product='Infovox 230' speaker='Icelandic Child' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Icelandic Female' product='Infovox 230' speaker='Icelandic Female' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Icelandic Giant' product='Infovox 230' speaker='Icelandic Giant' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Icelandic Male' product='Infovox 230' speaker='Icelandic Male' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Icelandic Zombie' product='Infovox 230' speaker='Icelandic Zombie' langID=0x000f gModeID={C9C5EDA0-7C89-11D0-0308-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Italian Child' product='Infovox 230' speaker='Italian Child' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Italian Female' product='Infovox 230' speaker='Italian Female' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Italian Giant' product='Infovox 230' speaker='Italian Giant' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Italian Male' product='Infovox 230' speaker='Italian Male' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Italian Zombie' product='Infovox 230' speaker='Italian Zombie' langID=0x0010 gModeID={C9C5EDA0-7C89-11D0-0309-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Norwegian Child' product='Infovox 230' speaker='Norwegian Child' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Norwegian Female' product='Infovox 230' speaker='Norwegian Female' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Norwegian Giant' product='Infovox 230' speaker='Norwegian Giant' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Norwegian Male' product='Infovox 230' speaker='Norwegian Male' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Norwegian Zombie' product='Infovox 230' speaker='Norwegian Zombie' langID=0x0014 gModeID={C9C5EDA0-7C89-11D0-030A-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Swedish Child' product='Infovox 230' speaker='Swedish Child' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-030000000000} gender=2 age=6 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Swedish Female' product='Infovox 230' speaker='Swedish Female' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-010000000000} gender=1 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Swedish Giant' product='Infovox 230' speaker='Swedish Giant' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-020000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Swedish Male' product='Infovox 230' speaker='Swedish Male' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-000000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,301 INFO mode: name='Swedish Zombie' product='Infovox 230' speaker='Swedish Zombie' langID=0x001d gModeID={C9C5EDA0-7C89-11D0-030E-040000000000} gender=2 age=30 features=0x19f
+2026-08-04 13:18:29,303 DEBUG <__main__.CaptureAudio object at 0x03D93AD0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:29,303 DEBUG 1 active COM objects: Added   <__main__.CaptureAudio object at 0x03D93AD0>
+2026-08-04 13:18:29,303 DEBUG <__main__.CaptureAudio object at 0x03D93AD0>.AddRef() -> 1
+2026-08-04 13:18:29,303 DEBUG <__main__.CaptureAudio object at 0x03D93AD0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:29,303 DEBUG <__main__.CaptureAudio object at 0x03D93AD0>.AddRef() -> 2
+2026-08-04 13:18:29,308 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d89f0 at 3d9f7b0>
+2026-08-04 13:18:29,308 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d89f4 at 3d9f760>
+2026-08-04 13:18:29,308 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:29,310 DEBUG 2 active COM objects: Added   <__main__.TTSNotifySink object at 0x02731050>
+2026-08-04 13:18:29,310 DEBUG <__main__.TTSNotifySink object at 0x02731050>.AddRef() -> 1
+2026-08-04 13:18:29,310 DEBUG <__main__.TTSNotifySink object at 0x02731050>.AddRef() -> 2
+2026-08-04 13:18:29,310 INFO Selected mode {C9C5EDA0-7C89-11D0-0300-000000000000} (features=0x19f)
+2026-08-04 13:18:29,311 DEBUG 3 active COM objects: Added   <__main__.BufNotifySink object at 0x03D93850>
+2026-08-04 13:18:29,311 DEBUG <__main__.BufNotifySink object at 0x03D93850>.AddRef() -> 1
+2026-08-04 13:18:29,311 DEBUG <__main__.BufNotifySink object at 0x03D93850>.AddRef() -> 2
+2026-08-04 13:18:31,767 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x443b0a8 at 443b490>
+2026-08-04 13:18:31,767 DEBUG <__main__.BufNotifySink object at 0x03D93850>.Release() -> 1
+2026-08-04 13:18:31,770 DEBUG <__main__.TTSNotifySink object at 0x02731050>.Release() -> 1
+2026-08-04 13:18:31,770 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x3fd011c at 3d9fdf0>
+2026-08-04 13:18:31,770 DEBUG Release <POINTER(ITTSCentralW) ptr=0x3fd0124 at 3d9f670>
+2026-08-04 13:18:31,771 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x3fd021c at 3d9f710>
+2026-08-04 13:18:31,772 DEBUG <__main__.CaptureAudio object at 0x03D93AD0>.Release() -> 1
+2026-08-04 13:18:31,772 DEBUG <__main__.CaptureAudio object at 0x03D93AD0>.Release() -> 0
+2026-08-04 13:18:31,772 DEBUG 2 active COM objects: Removed <__main__.CaptureAudio object at 0x03D93AD0>
+2026-08-04 13:18:31,772 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>]
+2026-08-04 13:18:31,775 DEBUG <__main__.CaptureAudio object at 0x03D896F0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:31,775 DEBUG 3 active COM objects: Added   <__main__.CaptureAudio object at 0x03D896F0>
+2026-08-04 13:18:31,775 DEBUG <__main__.CaptureAudio object at 0x03D896F0>.AddRef() -> 1
+2026-08-04 13:18:31,775 DEBUG <__main__.CaptureAudio object at 0x03D896F0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:31,775 DEBUG <__main__.CaptureAudio object at 0x03D896F0>.AddRef() -> 2
+2026-08-04 13:18:31,781 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d88f0 at 4441bc0>
+2026-08-04 13:18:31,781 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d88f4 at 443b670>
+2026-08-04 13:18:31,781 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:31,782 DEBUG 4 active COM objects: Added   <__main__.TTSNotifySink object at 0x0443AD10>
+2026-08-04 13:18:31,782 DEBUG <__main__.TTSNotifySink object at 0x0443AD10>.AddRef() -> 1
+2026-08-04 13:18:31,782 DEBUG <__main__.TTSNotifySink object at 0x0443AD10>.AddRef() -> 2
+2026-08-04 13:18:31,783 INFO Selected mode {C9C5EDA0-7C89-11D0-0300-010000000000} (features=0x19f)
+2026-08-04 13:18:31,783 DEBUG 5 active COM objects: Added   <__main__.BufNotifySink object at 0x03D89CB0>
+2026-08-04 13:18:31,783 DEBUG <__main__.BufNotifySink object at 0x03D89CB0>.AddRef() -> 1
+2026-08-04 13:18:31,784 DEBUG <__main__.BufNotifySink object at 0x03D89CB0>.AddRef() -> 2
+2026-08-04 13:18:33,646 DEBUG <__main__.TTSNotifySink object at 0x0443AD10>.Release() -> 1
+2026-08-04 13:18:33,647 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x3fd011c at 444b260>
+2026-08-04 13:18:33,647 DEBUG Release <POINTER(ITTSCentralW) ptr=0x3fd0124 at 3d9fdf0>
+2026-08-04 13:18:33,648 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e88b4 at 443b530>
+2026-08-04 13:18:33,648 DEBUG <__main__.CaptureAudio object at 0x03D896F0>.Release() -> 1
+2026-08-04 13:18:33,648 DEBUG <__main__.CaptureAudio object at 0x03D896F0>.Release() -> 0
+2026-08-04 13:18:33,648 DEBUG 4 active COM objects: Removed <__main__.CaptureAudio object at 0x03D896F0>
+2026-08-04 13:18:33,648 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.TTSNotifySink object at 0x0443AD10>, <__main__.BufNotifySink object at 0x03D89CB0>]
+2026-08-04 13:18:33,651 DEBUG <__main__.CaptureAudio object at 0x03D933F0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:33,651 DEBUG 5 active COM objects: Added   <__main__.CaptureAudio object at 0x03D933F0>
+2026-08-04 13:18:33,651 DEBUG <__main__.CaptureAudio object at 0x03D933F0>.AddRef() -> 1
+2026-08-04 13:18:33,651 DEBUG <__main__.CaptureAudio object at 0x03D933F0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:33,651 DEBUG <__main__.CaptureAudio object at 0x03D933F0>.AddRef() -> 2
+2026-08-04 13:18:33,656 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d8930 at 444b990>
+2026-08-04 13:18:33,656 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d8934 at 444b940>
+2026-08-04 13:18:33,656 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:33,658 DEBUG Release <POINTER(ITTSNotifySinkW) ptr=0x4441dc8 at 444b210>
+2026-08-04 13:18:33,658 DEBUG <__main__.TTSNotifySink object at 0x0443AD10>.Release() -> 0
+2026-08-04 13:18:33,658 DEBUG 4 active COM objects: Removed <__main__.TTSNotifySink object at 0x0443AD10>
+2026-08-04 13:18:33,658 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.CaptureAudio object at 0x03D933F0>]
+2026-08-04 13:18:33,658 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x444b508 at 444b8f0>
+2026-08-04 13:18:33,658 DEBUG <__main__.BufNotifySink object at 0x03D89CB0>.Release() -> 1
+2026-08-04 13:18:33,658 DEBUG 5 active COM objects: Added   <__main__.TTSNotifySink object at 0x0443AD50>
+2026-08-04 13:18:33,658 DEBUG <__main__.TTSNotifySink object at 0x0443AD50>.AddRef() -> 1
+2026-08-04 13:18:33,658 DEBUG <__main__.TTSNotifySink object at 0x0443AD50>.AddRef() -> 2
+2026-08-04 13:18:33,658 INFO Selected mode {C9C5EDA0-7C89-11D0-0300-030000000000} (features=0x19f)
+2026-08-04 13:18:33,658 DEBUG 6 active COM objects: Added   <__main__.BufNotifySink object at 0x0443AB30>
+2026-08-04 13:18:33,658 DEBUG <__main__.BufNotifySink object at 0x0443AB30>.AddRef() -> 1
+2026-08-04 13:18:33,658 DEBUG <__main__.BufNotifySink object at 0x0443AB30>.AddRef() -> 2
+2026-08-04 13:18:35,293 DEBUG <__main__.TTSNotifySink object at 0x0443AD50>.Release() -> 1
+2026-08-04 13:18:35,293 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x3fd011c at 4441e40>
+2026-08-04 13:18:35,294 DEBUG Release <POINTER(ITTSCentralW) ptr=0x3fd0124 at 443b580>
+2026-08-04 13:18:35,294 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e88b4 at 444b260>
+2026-08-04 13:18:35,296 DEBUG <__main__.CaptureAudio object at 0x03D933F0>.Release() -> 1
+2026-08-04 13:18:35,296 DEBUG <__main__.CaptureAudio object at 0x03D933F0>.Release() -> 0
+2026-08-04 13:18:35,296 DEBUG 5 active COM objects: Removed <__main__.CaptureAudio object at 0x03D933F0>
+2026-08-04 13:18:35,296 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.TTSNotifySink object at 0x0443AD50>, <__main__.BufNotifySink object at 0x0443AB30>]
+2026-08-04 13:18:35,298 DEBUG <__main__.CaptureAudio object at 0x04448270>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:35,298 DEBUG 6 active COM objects: Added   <__main__.CaptureAudio object at 0x04448270>
+2026-08-04 13:18:35,298 DEBUG <__main__.CaptureAudio object at 0x04448270>.AddRef() -> 1
+2026-08-04 13:18:35,298 DEBUG <__main__.CaptureAudio object at 0x04448270>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:35,298 DEBUG <__main__.CaptureAudio object at 0x04448270>.AddRef() -> 2
+2026-08-04 13:18:35,303 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d88f0 at 444f170>
+2026-08-04 13:18:35,303 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d88f4 at 444f080>
+2026-08-04 13:18:35,303 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:35,305 DEBUG 7 active COM objects: Added   <__main__.TTSNotifySink object at 0x044482F0>
+2026-08-04 13:18:35,305 DEBUG <__main__.TTSNotifySink object at 0x044482F0>.AddRef() -> 1
+2026-08-04 13:18:35,305 DEBUG <__main__.TTSNotifySink object at 0x044482F0>.AddRef() -> 2
+2026-08-04 13:18:35,305 INFO Selected mode {C9C5EDA0-7C89-11D0-0300-020000000000} (features=0x19f)
+2026-08-04 13:18:35,305 DEBUG 8 active COM objects: Added   <__main__.BufNotifySink object at 0x044488B0>
+2026-08-04 13:18:35,305 DEBUG <__main__.BufNotifySink object at 0x044488B0>.AddRef() -> 1
+2026-08-04 13:18:35,306 DEBUG <__main__.BufNotifySink object at 0x044488B0>.AddRef() -> 2
+2026-08-04 13:18:36,933 DEBUG <__main__.TTSNotifySink object at 0x044482F0>.Release() -> 1
+2026-08-04 13:18:36,934 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x3fd011c at 444f760>
+2026-08-04 13:18:36,934 DEBUG Release <POINTER(ITTSCentralW) ptr=0x3fd0124 at 4441e40>
+2026-08-04 13:18:36,935 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e88b4 at 444f030>
+2026-08-04 13:18:36,935 DEBUG <__main__.CaptureAudio object at 0x04448270>.Release() -> 1
+2026-08-04 13:18:36,935 DEBUG <__main__.CaptureAudio object at 0x04448270>.Release() -> 0
+2026-08-04 13:18:36,935 DEBUG 7 active COM objects: Removed <__main__.CaptureAudio object at 0x04448270>
+2026-08-04 13:18:36,935 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.TTSNotifySink object at 0x0443AD50>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.TTSNotifySink object at 0x044482F0>, <__main__.BufNotifySink object at 0x044488B0>]
+2026-08-04 13:18:36,937 DEBUG <__main__.CaptureAudio object at 0x044482D0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:36,937 DEBUG 8 active COM objects: Added   <__main__.CaptureAudio object at 0x044482D0>
+2026-08-04 13:18:36,937 DEBUG <__main__.CaptureAudio object at 0x044482D0>.AddRef() -> 1
+2026-08-04 13:18:36,938 DEBUG <__main__.CaptureAudio object at 0x044482D0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:36,938 DEBUG <__main__.CaptureAudio object at 0x044482D0>.AddRef() -> 2
+2026-08-04 13:18:36,943 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d8930 at 444ff30>
+2026-08-04 13:18:36,943 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d8934 at 444fe40>
+2026-08-04 13:18:36,944 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:36,945 DEBUG 9 active COM objects: Added   <__main__.TTSNotifySink object at 0x04448A10>
+2026-08-04 13:18:36,945 DEBUG <__main__.TTSNotifySink object at 0x04448A10>.AddRef() -> 1
+2026-08-04 13:18:36,945 DEBUG <__main__.TTSNotifySink object at 0x04448A10>.AddRef() -> 2
+2026-08-04 13:18:36,945 INFO Selected mode {C9C5EDA0-7C89-11D0-0300-040000000000} (features=0x19f)
+2026-08-04 13:18:36,946 DEBUG Release <POINTER(ITTSNotifySinkW) ptr=0x4441f08 at 4441da0>
+2026-08-04 13:18:36,946 DEBUG <__main__.TTSNotifySink object at 0x0443AD50>.Release() -> 0
+2026-08-04 13:18:36,946 DEBUG 8 active COM objects: Removed <__main__.TTSNotifySink object at 0x0443AD50>
+2026-08-04 13:18:36,946 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.TTSNotifySink object at 0x044482F0>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.CaptureAudio object at 0x044482D0>, <__main__.TTSNotifySink object at 0x04448A10>]
+2026-08-04 13:18:36,946 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x4441e18 at 444bf80>
+2026-08-04 13:18:36,946 DEBUG <__main__.BufNotifySink object at 0x0443AB30>.Release() -> 1
+2026-08-04 13:18:36,946 DEBUG Release <POINTER(ITTSNotifySinkW) ptr=0x444f328 at 444f710>
+2026-08-04 13:18:36,946 DEBUG <__main__.TTSNotifySink object at 0x044482F0>.Release() -> 0
+2026-08-04 13:18:36,946 DEBUG 7 active COM objects: Removed <__main__.TTSNotifySink object at 0x044482F0>
+2026-08-04 13:18:36,946 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.CaptureAudio object at 0x044482D0>, <__main__.TTSNotifySink object at 0x04448A10>]
+2026-08-04 13:18:36,946 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x444f9b8 at 444fda0>
+2026-08-04 13:18:36,946 DEBUG <__main__.BufNotifySink object at 0x044488B0>.Release() -> 1
+2026-08-04 13:18:36,946 DEBUG 8 active COM objects: Added   <__main__.BufNotifySink object at 0x04448B50>
+2026-08-04 13:18:36,946 DEBUG <__main__.BufNotifySink object at 0x04448B50>.AddRef() -> 1
+2026-08-04 13:18:36,946 DEBUG <__main__.BufNotifySink object at 0x04448B50>.AddRef() -> 2
+2026-08-04 13:18:38,589 DEBUG <__main__.TTSNotifySink object at 0x04448A10>.Release() -> 1
+2026-08-04 13:18:38,589 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x3fd011c at 4457580>
+2026-08-04 13:18:38,590 DEBUG Release <POINTER(ITTSCentralW) ptr=0x3fd0124 at 444f760>
+2026-08-04 13:18:38,590 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e88b4 at 444fdf0>
+2026-08-04 13:18:38,590 DEBUG <__main__.CaptureAudio object at 0x044482D0>.Release() -> 1
+2026-08-04 13:18:38,590 DEBUG <__main__.CaptureAudio object at 0x044482D0>.Release() -> 0
+2026-08-04 13:18:38,590 DEBUG 7 active COM objects: Removed <__main__.CaptureAudio object at 0x044482D0>
+2026-08-04 13:18:38,590 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>]
+2026-08-04 13:18:38,593 DEBUG <__main__.CaptureAudio object at 0x044482B0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:38,593 DEBUG 8 active COM objects: Added   <__main__.CaptureAudio object at 0x044482B0>
+2026-08-04 13:18:38,593 DEBUG <__main__.CaptureAudio object at 0x044482B0>.AddRef() -> 1
+2026-08-04 13:18:38,593 DEBUG <__main__.CaptureAudio object at 0x044482B0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:38,593 DEBUG <__main__.CaptureAudio object at 0x044482B0>.AddRef() -> 2
+2026-08-04 13:18:38,598 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d88f0 at 3d9f5d0>
+2026-08-04 13:18:38,598 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d88f4 at 3d9f620>
+2026-08-04 13:18:38,598 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:38,600 DEBUG 9 active COM objects: Added   <__main__.TTSNotifySink object at 0x044487D0>
+2026-08-04 13:18:38,600 DEBUG <__main__.TTSNotifySink object at 0x044487D0>.AddRef() -> 1
+2026-08-04 13:18:38,600 DEBUG <__main__.TTSNotifySink object at 0x044487D0>.AddRef() -> 2
+2026-08-04 13:18:38,600 INFO Selected mode {C9C5EDA0-7C89-11D0-0301-000000000000} (features=0x19f)
+2026-08-04 13:18:38,600 DEBUG 10 active COM objects: Added   <__main__.BufNotifySink object at 0x04448F50>
+2026-08-04 13:18:38,600 DEBUG <__main__.BufNotifySink object at 0x04448F50>.AddRef() -> 1
+2026-08-04 13:18:38,600 DEBUG <__main__.BufNotifySink object at 0x04448F50>.AddRef() -> 2
+2026-08-04 13:18:40,647 DEBUG <__main__.TTSNotifySink object at 0x044487D0>.Release() -> 1
+2026-08-04 13:18:40,647 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 4441ee0>
+2026-08-04 13:18:40,648 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 3d9f670>
+2026-08-04 13:18:40,649 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 3d9f080>
+2026-08-04 13:18:40,649 DEBUG <__main__.CaptureAudio object at 0x044482B0>.Release() -> 1
+2026-08-04 13:18:40,649 DEBUG <__main__.CaptureAudio object at 0x044482B0>.Release() -> 0
+2026-08-04 13:18:40,649 DEBUG 9 active COM objects: Removed <__main__.CaptureAudio object at 0x044482B0>
+2026-08-04 13:18:40,649 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.TTSNotifySink object at 0x044487D0>, <__main__.BufNotifySink object at 0x04448F50>]
+2026-08-04 13:18:40,651 DEBUG <__main__.CaptureAudio object at 0x04448250>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:40,651 DEBUG 10 active COM objects: Added   <__main__.CaptureAudio object at 0x04448250>
+2026-08-04 13:18:40,651 DEBUG <__main__.CaptureAudio object at 0x04448250>.AddRef() -> 1
+2026-08-04 13:18:40,652 DEBUG <__main__.CaptureAudio object at 0x04448250>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:40,652 DEBUG <__main__.CaptureAudio object at 0x04448250>.AddRef() -> 2
+2026-08-04 13:18:40,656 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d8930 at 4457d50>
+2026-08-04 13:18:40,656 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d8934 at 4457c60>
+2026-08-04 13:18:40,656 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:40,657 DEBUG 11 active COM objects: Added   <__main__.TTSNotifySink object at 0x04448690>
+2026-08-04 13:18:40,657 DEBUG <__main__.TTSNotifySink object at 0x04448690>.AddRef() -> 1
+2026-08-04 13:18:40,657 DEBUG <__main__.TTSNotifySink object at 0x04448690>.AddRef() -> 2
+2026-08-04 13:18:40,658 INFO Selected mode {C9C5EDA0-7C89-11D0-0307-000000000000} (features=0x19f)
+2026-08-04 13:18:40,658 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x444f2d8 at 444f170>
+2026-08-04 13:18:40,658 DEBUG <__main__.BufNotifySink object at 0x04448B50>.Release() -> 1
+2026-08-04 13:18:40,658 DEBUG Release <POINTER(ITTSNotifySinkW) ptr=0x444be18 at 4441f30>
+2026-08-04 13:18:40,658 DEBUG <__main__.TTSNotifySink object at 0x044487D0>.Release() -> 0
+2026-08-04 13:18:40,658 DEBUG 10 active COM objects: Removed <__main__.TTSNotifySink object at 0x044487D0>
+2026-08-04 13:18:40,658 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.CaptureAudio object at 0x04448250>, <__main__.TTSNotifySink object at 0x04448690>]
+2026-08-04 13:18:40,658 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x44577d8 at 4457bc0>
+2026-08-04 13:18:40,658 DEBUG <__main__.BufNotifySink object at 0x04448F50>.Release() -> 1
+2026-08-04 13:18:40,658 DEBUG 11 active COM objects: Added   <__main__.BufNotifySink object at 0x04448A70>
+2026-08-04 13:18:40,658 DEBUG <__main__.BufNotifySink object at 0x04448A70>.AddRef() -> 1
+2026-08-04 13:18:40,659 DEBUG <__main__.BufNotifySink object at 0x04448A70>.AddRef() -> 2
+2026-08-04 13:18:43,121 DEBUG <__main__.TTSNotifySink object at 0x04448690>.Release() -> 1
+2026-08-04 13:18:43,121 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 445b3a0>
+2026-08-04 13:18:43,121 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 3d9f120>
+2026-08-04 13:18:43,122 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 4457cb0>
+2026-08-04 13:18:43,122 DEBUG <__main__.CaptureAudio object at 0x04448250>.Release() -> 1
+2026-08-04 13:18:43,122 DEBUG <__main__.CaptureAudio object at 0x04448250>.Release() -> 0
+2026-08-04 13:18:43,122 DEBUG 10 active COM objects: Removed <__main__.CaptureAudio object at 0x04448250>
+2026-08-04 13:18:43,122 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>]
+2026-08-04 13:18:43,125 DEBUG <__main__.CaptureAudio object at 0x04448310>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:43,125 DEBUG 11 active COM objects: Added   <__main__.CaptureAudio object at 0x04448310>
+2026-08-04 13:18:43,125 DEBUG <__main__.CaptureAudio object at 0x04448310>.AddRef() -> 1
+2026-08-04 13:18:43,126 DEBUG <__main__.CaptureAudio object at 0x04448310>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:43,126 DEBUG <__main__.CaptureAudio object at 0x04448310>.AddRef() -> 2
+2026-08-04 13:18:43,130 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d88f0 at 444bd00>
+2026-08-04 13:18:43,130 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d88f4 at 444b260>
+2026-08-04 13:18:43,130 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:43,131 DEBUG 12 active COM objects: Added   <__main__.TTSNotifySink object at 0x044481F0>
+2026-08-04 13:18:43,131 DEBUG <__main__.TTSNotifySink object at 0x044481F0>.AddRef() -> 1
+2026-08-04 13:18:43,132 DEBUG <__main__.TTSNotifySink object at 0x044481F0>.AddRef() -> 2
+2026-08-04 13:18:43,132 INFO Selected mode {C9C5EDA0-7C89-11D0-0306-000000000000} (features=0x19f)
+2026-08-04 13:18:43,132 DEBUG 13 active COM objects: Added   <__main__.BufNotifySink object at 0x044489D0>
+2026-08-04 13:18:43,132 DEBUG <__main__.BufNotifySink object at 0x044489D0>.AddRef() -> 1
+2026-08-04 13:18:43,133 DEBUG <__main__.BufNotifySink object at 0x044489D0>.AddRef() -> 2
+2026-08-04 13:18:45,386 DEBUG <__main__.TTSNotifySink object at 0x044481F0>.Release() -> 1
+2026-08-04 13:18:45,387 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 445b9e0>
+2026-08-04 13:18:45,387 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 444bdf0>
+2026-08-04 13:18:45,388 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 444bc10>
+2026-08-04 13:18:45,388 DEBUG <__main__.CaptureAudio object at 0x04448310>.Release() -> 1
+2026-08-04 13:18:45,388 DEBUG <__main__.CaptureAudio object at 0x04448310>.Release() -> 0
+2026-08-04 13:18:45,388 DEBUG 12 active COM objects: Removed <__main__.CaptureAudio object at 0x04448310>
+2026-08-04 13:18:45,388 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.TTSNotifySink object at 0x044481F0>, <__main__.BufNotifySink object at 0x044489D0>]
+2026-08-04 13:18:45,390 DEBUG <__main__.CaptureAudio object at 0x026EC430>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:45,390 DEBUG 13 active COM objects: Added   <__main__.CaptureAudio object at 0x026EC430>
+2026-08-04 13:18:45,390 DEBUG <__main__.CaptureAudio object at 0x026EC430>.AddRef() -> 1
+2026-08-04 13:18:45,390 DEBUG <__main__.CaptureAudio object at 0x026EC430>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:45,390 DEBUG <__main__.CaptureAudio object at 0x026EC430>.AddRef() -> 2
+2026-08-04 13:18:45,397 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d8930 at 4460170>
+2026-08-04 13:18:45,397 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d8934 at 44601c0>
+2026-08-04 13:18:45,397 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:45,398 DEBUG 14 active COM objects: Added   <__main__.TTSNotifySink object at 0x04448390>
+2026-08-04 13:18:45,398 DEBUG <__main__.TTSNotifySink object at 0x04448390>.AddRef() -> 1
+2026-08-04 13:18:45,398 DEBUG <__main__.TTSNotifySink object at 0x04448390>.AddRef() -> 2
+2026-08-04 13:18:45,398 INFO Selected mode {C9C5EDA0-7C89-11D0-0309-000000000000} (features=0x19f)
+2026-08-04 13:18:45,400 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x444baa8 at 444bc60>
+2026-08-04 13:18:45,400 DEBUG <__main__.BufNotifySink object at 0x04448A70>.Release() -> 1
+2026-08-04 13:18:45,400 DEBUG Release <POINTER(ITTSNotifySinkW) ptr=0x4441eb8 at 445b990>
+2026-08-04 13:18:45,400 DEBUG <__main__.TTSNotifySink object at 0x044481F0>.Release() -> 0
+2026-08-04 13:18:45,400 DEBUG 13 active COM objects: Removed <__main__.TTSNotifySink object at 0x044481F0>
+2026-08-04 13:18:45,400 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.CaptureAudio object at 0x026EC430>, <__main__.TTSNotifySink object at 0x04448390>]
+2026-08-04 13:18:45,400 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x445bc88 at 44600d0>
+2026-08-04 13:18:45,400 DEBUG <__main__.BufNotifySink object at 0x044489D0>.Release() -> 1
+2026-08-04 13:18:45,400 DEBUG 14 active COM objects: Added   <__main__.BufNotifySink object at 0x04448AD0>
+2026-08-04 13:18:45,400 DEBUG <__main__.BufNotifySink object at 0x04448AD0>.AddRef() -> 1
+2026-08-04 13:18:45,400 DEBUG <__main__.BufNotifySink object at 0x04448AD0>.AddRef() -> 2
+2026-08-04 13:18:47,846 DEBUG <__main__.TTSNotifySink object at 0x04448390>.Release() -> 1
+2026-08-04 13:18:47,847 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 4460800>
+2026-08-04 13:18:47,847 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 444bdf0>
+2026-08-04 13:18:47,848 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 4460120>
+2026-08-04 13:18:47,848 DEBUG <__main__.CaptureAudio object at 0x026EC430>.Release() -> 1
+2026-08-04 13:18:47,848 DEBUG <__main__.CaptureAudio object at 0x026EC430>.Release() -> 0
+2026-08-04 13:18:47,848 DEBUG 13 active COM objects: Removed <__main__.CaptureAudio object at 0x026EC430>
+2026-08-04 13:18:47,848 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>]
+2026-08-04 13:18:47,851 DEBUG <__main__.CaptureAudio object at 0x04448F10>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:47,851 DEBUG 14 active COM objects: Added   <__main__.CaptureAudio object at 0x04448F10>
+2026-08-04 13:18:47,851 DEBUG <__main__.CaptureAudio object at 0x04448F10>.AddRef() -> 1
+2026-08-04 13:18:47,852 DEBUG <__main__.CaptureAudio object at 0x04448F10>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:47,852 DEBUG <__main__.CaptureAudio object at 0x04448F10>.AddRef() -> 2
+2026-08-04 13:18:47,855 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d88f0 at 445b8a0>
+2026-08-04 13:18:47,855 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d88f4 at 445b580>
+2026-08-04 13:18:47,856 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:47,857 DEBUG 15 active COM objects: Added   <__main__.TTSNotifySink object at 0x04448490>
+2026-08-04 13:18:47,857 DEBUG <__main__.TTSNotifySink object at 0x04448490>.AddRef() -> 1
+2026-08-04 13:18:47,857 DEBUG <__main__.TTSNotifySink object at 0x04448490>.AddRef() -> 2
+2026-08-04 13:18:47,857 INFO Selected mode {C9C5EDA0-7C89-11D0-030C-000000000000} (features=0x19f)
+2026-08-04 13:18:47,857 DEBUG 16 active COM objects: Added   <__main__.BufNotifySink object at 0x044481D0>
+2026-08-04 13:18:47,857 DEBUG <__main__.BufNotifySink object at 0x044481D0>.AddRef() -> 1
+2026-08-04 13:18:47,858 DEBUG <__main__.BufNotifySink object at 0x044481D0>.AddRef() -> 2
+2026-08-04 13:18:49,494 DEBUG <__main__.TTSNotifySink object at 0x04448490>.Release() -> 1
+2026-08-04 13:18:49,495 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 4460e90>
+2026-08-04 13:18:49,495 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 445b800>
+2026-08-04 13:18:49,495 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 445b5d0>
+2026-08-04 13:18:49,496 DEBUG <__main__.CaptureAudio object at 0x04448F10>.Release() -> 1
+2026-08-04 13:18:49,496 DEBUG <__main__.CaptureAudio object at 0x04448F10>.Release() -> 0
+2026-08-04 13:18:49,496 DEBUG 15 active COM objects: Removed <__main__.CaptureAudio object at 0x04448F10>
+2026-08-04 13:18:49,496 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.TTSNotifySink object at 0x04448490>, <__main__.BufNotifySink object at 0x044481D0>]
+2026-08-04 13:18:49,499 DEBUG <__main__.CaptureAudio object at 0x03D93E10>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:49,499 DEBUG 16 active COM objects: Added   <__main__.CaptureAudio object at 0x03D93E10>
+2026-08-04 13:18:49,499 DEBUG <__main__.CaptureAudio object at 0x03D93E10>.AddRef() -> 1
+2026-08-04 13:18:49,499 DEBUG <__main__.CaptureAudio object at 0x03D93E10>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:49,499 DEBUG <__main__.CaptureAudio object at 0x03D93E10>.AddRef() -> 2
+2026-08-04 13:18:49,503 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d8930 at 4467670>
+2026-08-04 13:18:49,505 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d8934 at 44676c0>
+2026-08-04 13:18:49,505 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:49,506 DEBUG 17 active COM objects: Added   <__main__.TTSNotifySink object at 0x04456B70>
+2026-08-04 13:18:49,506 DEBUG <__main__.TTSNotifySink object at 0x04456B70>.AddRef() -> 1
+2026-08-04 13:18:49,507 DEBUG <__main__.TTSNotifySink object at 0x04456B70>.AddRef() -> 2
+2026-08-04 13:18:49,507 INFO Selected mode {C9C5EDA0-7C89-11D0-0304-000000000000} (features=0x19f)
+2026-08-04 13:18:49,507 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x445b9b8 at 445b850>
+2026-08-04 13:18:49,507 DEBUG <__main__.BufNotifySink object at 0x04448AD0>.Release() -> 1
+2026-08-04 13:18:49,507 DEBUG Release <POINTER(ITTSNotifySinkW) ptr=0x4460a58 at 4460e40>
+2026-08-04 13:18:49,507 DEBUG <__main__.TTSNotifySink object at 0x04448490>.Release() -> 0
+2026-08-04 13:18:49,507 DEBUG 16 active COM objects: Removed <__main__.TTSNotifySink object at 0x04448490>
+2026-08-04 13:18:49,507 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.CaptureAudio object at 0x03D93E10>, <__main__.TTSNotifySink object at 0x04456B70>]
+2026-08-04 13:18:49,507 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x4467148 at 4467530>
+2026-08-04 13:18:49,507 DEBUG <__main__.BufNotifySink object at 0x044481D0>.Release() -> 1
+2026-08-04 13:18:49,507 DEBUG 17 active COM objects: Added   <__main__.BufNotifySink object at 0x04456890>
+2026-08-04 13:18:49,507 DEBUG <__main__.BufNotifySink object at 0x04456890>.AddRef() -> 1
+2026-08-04 13:18:49,508 DEBUG <__main__.BufNotifySink object at 0x04456890>.AddRef() -> 2
+2026-08-04 13:18:51,555 DEBUG <__main__.TTSNotifySink object at 0x04456B70>.Release() -> 1
+2026-08-04 13:18:51,555 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 4467d00>
+2026-08-04 13:18:51,555 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 445b9e0>
+2026-08-04 13:18:51,556 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 44675d0>
+2026-08-04 13:18:51,556 DEBUG <__main__.CaptureAudio object at 0x03D93E10>.Release() -> 1
+2026-08-04 13:18:51,556 DEBUG <__main__.CaptureAudio object at 0x03D93E10>.Release() -> 0
+2026-08-04 13:18:51,556 DEBUG 16 active COM objects: Removed <__main__.CaptureAudio object at 0x03D93E10>
+2026-08-04 13:18:51,556 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.TTSNotifySink object at 0x04456B70>, <__main__.BufNotifySink object at 0x04456890>]
+2026-08-04 13:18:51,560 DEBUG <__main__.CaptureAudio object at 0x03D93DD0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:51,560 DEBUG 17 active COM objects: Added   <__main__.CaptureAudio object at 0x03D93DD0>
+2026-08-04 13:18:51,560 DEBUG <__main__.CaptureAudio object at 0x03D93DD0>.AddRef() -> 1
+2026-08-04 13:18:51,560 DEBUG <__main__.CaptureAudio object at 0x03D93DD0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:51,560 DEBUG <__main__.CaptureAudio object at 0x03D93DD0>.AddRef() -> 2
+2026-08-04 13:18:51,569 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d89f0 at 4460c60>
+2026-08-04 13:18:51,569 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d89f4 at 4460cb0>
+2026-08-04 13:18:51,569 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:51,570 DEBUG 18 active COM objects: Added   <__main__.TTSNotifySink object at 0x04456490>
+2026-08-04 13:18:51,570 DEBUG <__main__.TTSNotifySink object at 0x04456490>.AddRef() -> 1
+2026-08-04 13:18:51,570 DEBUG <__main__.TTSNotifySink object at 0x04456490>.AddRef() -> 2
+2026-08-04 13:18:51,571 INFO Selected mode {C9C5EDA0-7C89-11D0-0302-000000000000} (features=0x19f)
+2026-08-04 13:18:51,571 DEBUG 19 active COM objects: Added   <__main__.BufNotifySink object at 0x03D93D10>
+2026-08-04 13:18:51,571 DEBUG <__main__.BufNotifySink object at 0x03D93D10>.AddRef() -> 1
+2026-08-04 13:18:51,571 DEBUG <__main__.BufNotifySink object at 0x03D93D10>.AddRef() -> 2
+2026-08-04 13:18:53,626 DEBUG <__main__.TTSNotifySink object at 0x04456490>.Release() -> 1
+2026-08-04 13:18:53,626 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 446b3a0>
+2026-08-04 13:18:53,627 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 44675d0>
+2026-08-04 13:18:53,629 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 4460c10>
+2026-08-04 13:18:53,629 DEBUG <__main__.CaptureAudio object at 0x03D93DD0>.Release() -> 1
+2026-08-04 13:18:53,629 DEBUG <__main__.CaptureAudio object at 0x03D93DD0>.Release() -> 0
+2026-08-04 13:18:53,629 DEBUG 18 active COM objects: Removed <__main__.CaptureAudio object at 0x03D93DD0>
+2026-08-04 13:18:53,629 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.TTSNotifySink object at 0x04456B70>, <__main__.BufNotifySink object at 0x04456890>, <__main__.TTSNotifySink object at 0x04456490>, <__main__.BufNotifySink object at 0x03D93D10>]
+2026-08-04 13:18:53,632 DEBUG <__main__.CaptureAudio object at 0x044564B0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:53,632 DEBUG 19 active COM objects: Added   <__main__.CaptureAudio object at 0x044564B0>
+2026-08-04 13:18:53,632 DEBUG <__main__.CaptureAudio object at 0x044564B0>.AddRef() -> 1
+2026-08-04 13:18:53,632 DEBUG <__main__.CaptureAudio object at 0x044564B0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:53,632 DEBUG <__main__.CaptureAudio object at 0x044564B0>.AddRef() -> 2
+2026-08-04 13:18:53,636 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d88f0 at 446bb70>
+2026-08-04 13:18:53,636 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d88f4 at 446ba80>
+2026-08-04 13:18:53,637 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:53,638 DEBUG 20 active COM objects: Added   <__main__.TTSNotifySink object at 0x044567B0>
+2026-08-04 13:18:53,638 DEBUG <__main__.TTSNotifySink object at 0x044567B0>.AddRef() -> 1
+2026-08-04 13:18:53,638 DEBUG <__main__.TTSNotifySink object at 0x044567B0>.AddRef() -> 2
+2026-08-04 13:18:53,638 INFO Selected mode {C9C5EDA0-7C89-11D0-030A-000000000000} (features=0x19f)
+2026-08-04 13:18:53,639 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x4467f58 at 4460d00>
+2026-08-04 13:18:53,639 DEBUG <__main__.BufNotifySink object at 0x04456890>.Release() -> 1
+2026-08-04 13:18:53,639 DEBUG Release <POINTER(ITTSNotifySinkW) ptr=0x4460148 at 446b350>
+2026-08-04 13:18:53,639 DEBUG <__main__.TTSNotifySink object at 0x04456490>.Release() -> 0
+2026-08-04 13:18:53,639 DEBUG 19 active COM objects: Removed <__main__.TTSNotifySink object at 0x04456490>
+2026-08-04 13:18:53,639 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.TTSNotifySink object at 0x04456B70>, <__main__.BufNotifySink object at 0x04456890>, <__main__.BufNotifySink object at 0x03D93D10>, <__main__.CaptureAudio object at 0x044564B0>, <__main__.TTSNotifySink object at 0x044567B0>]
+2026-08-04 13:18:53,639 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x446b5f8 at 446b9e0>
+2026-08-04 13:18:53,639 DEBUG <__main__.BufNotifySink object at 0x03D93D10>.Release() -> 1
+2026-08-04 13:18:53,639 DEBUG 20 active COM objects: Added   <__main__.BufNotifySink object at 0x04456E30>
+2026-08-04 13:18:53,639 DEBUG <__main__.BufNotifySink object at 0x04456E30>.AddRef() -> 1
+2026-08-04 13:18:53,639 DEBUG <__main__.BufNotifySink object at 0x04456E30>.AddRef() -> 2
+2026-08-04 13:18:55,683 DEBUG <__main__.TTSNotifySink object at 0x044567B0>.Release() -> 1
+2026-08-04 13:18:55,683 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 44951c0>
+2026-08-04 13:18:55,684 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 4460c10>
+2026-08-04 13:18:55,685 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 446ba30>
+2026-08-04 13:18:55,685 DEBUG <__main__.CaptureAudio object at 0x044564B0>.Release() -> 1
+2026-08-04 13:18:55,685 DEBUG <__main__.CaptureAudio object at 0x044564B0>.Release() -> 0
+2026-08-04 13:18:55,685 DEBUG 19 active COM objects: Removed <__main__.CaptureAudio object at 0x044564B0>
+2026-08-04 13:18:55,685 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.TTSNotifySink object at 0x04456B70>, <__main__.BufNotifySink object at 0x04456890>, <__main__.BufNotifySink object at 0x03D93D10>, <__main__.TTSNotifySink object at 0x044567B0>, <__main__.BufNotifySink object at 0x04456E30>]
+2026-08-04 13:18:55,688 DEBUG <__main__.CaptureAudio object at 0x04456B50>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:55,688 DEBUG 20 active COM objects: Added   <__main__.CaptureAudio object at 0x04456B50>
+2026-08-04 13:18:55,688 DEBUG <__main__.CaptureAudio object at 0x04456B50>.AddRef() -> 1
+2026-08-04 13:18:55,688 DEBUG <__main__.CaptureAudio object at 0x04456B50>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:55,688 DEBUG <__main__.CaptureAudio object at 0x04456B50>.AddRef() -> 2
+2026-08-04 13:18:55,694 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d89f0 at 446b1c0>
+2026-08-04 13:18:55,694 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d89f4 at 446b170>
+2026-08-04 13:18:55,695 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:55,696 DEBUG 21 active COM objects: Added   <__main__.TTSNotifySink object at 0x04456E50>
+2026-08-04 13:18:55,696 DEBUG <__main__.TTSNotifySink object at 0x04456E50>.AddRef() -> 1
+2026-08-04 13:18:55,696 DEBUG <__main__.TTSNotifySink object at 0x04456E50>.AddRef() -> 2
+2026-08-04 13:18:55,696 INFO Selected mode {C9C5EDA0-7C89-11D0-030E-000000000000} (features=0x19f)
+2026-08-04 13:18:55,697 DEBUG 22 active COM objects: Added   <__main__.BufNotifySink object at 0x04456B10>
+2026-08-04 13:18:55,697 DEBUG <__main__.BufNotifySink object at 0x04456B10>.AddRef() -> 1
+2026-08-04 13:18:55,697 DEBUG <__main__.BufNotifySink object at 0x04456B10>.AddRef() -> 2
+2026-08-04 13:18:58,353 DEBUG <__main__.TTSNotifySink object at 0x04456E50>.Release() -> 1
+2026-08-04 13:18:58,353 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 4495850>
+2026-08-04 13:18:58,353 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 446b350>
+2026-08-04 13:18:58,354 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 446b0d0>
+2026-08-04 13:18:58,354 DEBUG <__main__.CaptureAudio object at 0x04456B50>.Release() -> 1
+2026-08-04 13:18:58,354 DEBUG <__main__.CaptureAudio object at 0x04456B50>.Release() -> 0
+2026-08-04 13:18:58,354 DEBUG 21 active COM objects: Removed <__main__.CaptureAudio object at 0x04456B50>
+2026-08-04 13:18:58,354 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.TTSNotifySink object at 0x04456B70>, <__main__.BufNotifySink object at 0x04456890>, <__main__.BufNotifySink object at 0x03D93D10>, <__main__.TTSNotifySink object at 0x044567B0>, <__main__.BufNotifySink object at 0x04456E30>, <__main__.TTSNotifySink object at 0x04456E50>, <__main__.BufNotifySink object at 0x04456B10>]
+2026-08-04 13:18:58,359 DEBUG <__main__.CaptureAudio object at 0x03D83DB0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:58,359 DEBUG 22 active COM objects: Added   <__main__.CaptureAudio object at 0x03D83DB0>
+2026-08-04 13:18:58,359 DEBUG <__main__.CaptureAudio object at 0x03D83DB0>.AddRef() -> 1
+2026-08-04 13:18:58,359 DEBUG <__main__.CaptureAudio object at 0x03D83DB0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:18:58,359 DEBUG <__main__.CaptureAudio object at 0x03D83DB0>.AddRef() -> 2
+2026-08-04 13:18:58,363 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d88f0 at 449b0d0>
+2026-08-04 13:18:58,363 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d88f4 at 449b080>
+2026-08-04 13:18:58,364 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:18:58,365 DEBUG 23 active COM objects: Added   <__main__.TTSNotifySink object at 0x04456450>
+2026-08-04 13:18:58,365 DEBUG <__main__.TTSNotifySink object at 0x04456450>.AddRef() -> 1
+2026-08-04 13:18:58,365 DEBUG <__main__.TTSNotifySink object at 0x04456450>.AddRef() -> 2
+2026-08-04 13:18:58,366 INFO Selected mode {C9C5EDA0-7C89-11D0-0305-000000000000} (features=0x19f)
+2026-08-04 13:18:58,366 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x4460a58 at 446b9e0>
+2026-08-04 13:18:58,366 DEBUG <__main__.BufNotifySink object at 0x04456E30>.Release() -> 1
+2026-08-04 13:18:58,366 DEBUG Release <POINTER(ITTSNotifySinkW) ptr=0x446b2d8 at 4495800>
+2026-08-04 13:18:58,366 DEBUG <__main__.TTSNotifySink object at 0x04456E50>.Release() -> 0
+2026-08-04 13:18:58,366 DEBUG 22 active COM objects: Removed <__main__.TTSNotifySink object at 0x04456E50>
+2026-08-04 13:18:58,366 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.TTSNotifySink object at 0x04456B70>, <__main__.BufNotifySink object at 0x04456890>, <__main__.BufNotifySink object at 0x03D93D10>, <__main__.TTSNotifySink object at 0x044567B0>, <__main__.BufNotifySink object at 0x04456E30>, <__main__.BufNotifySink object at 0x04456B10>, <__main__.CaptureAudio object at 0x03D83DB0>, <__main__.TTSNotifySink object at 0x04456450>]
+2026-08-04 13:18:58,366 DEBUG Release <POINTER(ITTSBufNotifySink) ptr=0x4495af8 at 4495f80>
+2026-08-04 13:18:58,366 DEBUG <__main__.BufNotifySink object at 0x04456B10>.Release() -> 1
+2026-08-04 13:18:58,366 DEBUG 23 active COM objects: Added   <__main__.BufNotifySink object at 0x04456E90>
+2026-08-04 13:18:58,366 DEBUG <__main__.BufNotifySink object at 0x04456E90>.AddRef() -> 1
+2026-08-04 13:18:58,367 DEBUG <__main__.BufNotifySink object at 0x04456E90>.AddRef() -> 2
+2026-08-04 13:19:00,225 DEBUG <__main__.TTSNotifySink object at 0x04456450>.Release() -> 1
+2026-08-04 13:19:00,225 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 449b710>
+2026-08-04 13:19:00,225 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 446b350>
+2026-08-04 13:19:00,227 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 449b030>
+2026-08-04 13:19:00,227 DEBUG <__main__.CaptureAudio object at 0x03D83DB0>.Release() -> 1
+2026-08-04 13:19:00,227 DEBUG <__main__.CaptureAudio object at 0x03D83DB0>.Release() -> 0
+2026-08-04 13:19:00,227 DEBUG 22 active COM objects: Removed <__main__.CaptureAudio object at 0x03D83DB0>
+2026-08-04 13:19:00,227 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.TTSNotifySink object at 0x04456B70>, <__main__.BufNotifySink object at 0x04456890>, <__main__.BufNotifySink object at 0x03D93D10>, <__main__.TTSNotifySink object at 0x044567B0>, <__main__.BufNotifySink object at 0x04456E30>, <__main__.BufNotifySink object at 0x04456B10>, <__main__.TTSNotifySink object at 0x04456450>, <__main__.BufNotifySink object at 0x04456E90>]
+2026-08-04 13:19:00,230 DEBUG <__main__.CaptureAudio object at 0x044661B0>.QueryInterface({F546B340-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:19:00,230 DEBUG 23 active COM objects: Added   <__main__.CaptureAudio object at 0x044661B0>
+2026-08-04 13:19:00,230 DEBUG <__main__.CaptureAudio object at 0x044661B0>.AddRef() -> 1
+2026-08-04 13:19:00,231 DEBUG <__main__.CaptureAudio object at 0x044661B0>.QueryInterface({2EC34DA0-C743-11CD-80E5-00AA003E4B50}) -> S_OK
+2026-08-04 13:19:00,231 DEBUG <__main__.CaptureAudio object at 0x044661B0>.AddRef() -> 2
+2026-08-04 13:19:00,235 DEBUG Release <POINTER(IErrorInfo) ptr=0x13d8930 at 4495710>
+2026-08-04 13:19:00,236 DEBUG Release <POINTER(ICreateErrorInfo) ptr=0x13d8934 at 4495530>
+2026-08-04 13:19:00,236 INFO WaveFormatSet: 16000 Hz, 1 ch, 16 bit (tag=1)
+2026-08-04 13:19:00,237 DEBUG 24 active COM objects: Added   <__main__.TTSNotifySink object at 0x044664F0>
+2026-08-04 13:19:00,238 DEBUG <__main__.TTSNotifySink object at 0x044664F0>.AddRef() -> 1
+2026-08-04 13:19:00,238 DEBUG <__main__.TTSNotifySink object at 0x044664F0>.AddRef() -> 2
+2026-08-04 13:19:00,238 INFO Selected mode {C9C5EDA0-7C89-11D0-0308-000000000000} (features=0x19f)
+2026-08-04 13:19:00,238 DEBUG 25 active COM objects: Added   <__main__.BufNotifySink object at 0x04466F30>
+2026-08-04 13:19:00,238 DEBUG <__main__.BufNotifySink object at 0x04466F30>.AddRef() -> 1
+2026-08-04 13:19:00,239 DEBUG <__main__.BufNotifySink object at 0x04466F30>.AddRef() -> 2
+2026-08-04 13:19:02,285 DEBUG Release <POINTER(ITTSEnumW) ptr=0x40e5cd0 at 3d915d0>
+2026-08-04 13:19:02,286 DEBUG Release <POINTER(ITTSCentralW) ptr=0x40e70f4 at 44955d0>
+2026-08-04 13:19:02,286 DEBUG Release <POINTER(ITTSAttributesW) ptr=0x40e70ec at 449bda0>
+2026-08-04 13:19:02,287 DEBUG Release <POINTER(IAudioDestNotifySink) ptr=0x40e71ec at 44954e0>
+2026-08-04 13:19:02,287 DEBUG <__main__.CaptureAudio object at 0x044661B0>.Release() -> 1
+2026-08-04 13:19:02,287 DEBUG <__main__.CaptureAudio object at 0x044661B0>.Release() -> 0
+2026-08-04 13:19:02,287 DEBUG 24 active COM objects: Removed <__main__.CaptureAudio object at 0x044661B0>
+2026-08-04 13:19:02,287 DEBUG Remaining: [<__main__.TTSNotifySink object at 0x02731050>, <__main__.BufNotifySink object at 0x03D93850>, <__main__.BufNotifySink object at 0x03D89CB0>, <__main__.BufNotifySink object at 0x0443AB30>, <__main__.BufNotifySink object at 0x044488B0>, <__main__.TTSNotifySink object at 0x04448A10>, <__main__.BufNotifySink object at 0x04448B50>, <__main__.BufNotifySink object at 0x04448F50>, <__main__.TTSNotifySink object at 0x04448690>, <__main__.BufNotifySink object at 0x04448A70>, <__main__.BufNotifySink object at 0x044489D0>, <__main__.TTSNotifySink object at 0x04448390>, <__main__.BufNotifySink object at 0x04448AD0>, <__main__.BufNotifySink object at 0x044481D0>, <__main__.TTSNotifySink object at 0x04456B70>, <__main__.BufNotifySink object at 0x04456890>, <__main__.BufNotifySink object at 0x03D93D10>, <__main__.TTSNotifySink object at 0x044567B0>, <__main__.BufNotifySink object at 0x04456E30>, <__main__.BufNotifySink object at 0x04456B10>, <__main__.TTSNotifySink object at 0x04456450>, <__main__.BufNotifySink object at 0x04456E90>, <__main__.TTSNotifySink object at 0x044664F0>, <__main__.BufNotifySink object at 0x04466F30>]
+2026-08-04 13:19:02,289 DEBUG <__main__.TTSNotifySink object at 0x044664F0>.Release() -> 1
+2026-08-04 13:19:02,290 DEBUG Calling CoUninitialize()
+2026-08-04 13:19:02,290 DEBUG CoUninitialize() done.

@@ -1,0 +1,4 @@
+# OS / OneDrive cruft (not project files)
+Thumbs.db
+desktop.ini
+.DS_Store

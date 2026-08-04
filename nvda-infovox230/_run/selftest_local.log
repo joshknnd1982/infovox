@@ -1,0 +1,9 @@
+2026-08-04 12:06:17,733 DEBUG CoInitializeEx(None, 2)
+2026-08-04 12:06:17,733 INFO seeded engine paths in HKCU\Software\Babel-Infovox AB\Infovox 230
+2026-08-04 12:06:17,733 INFO seeded engine paths in HKLM\Software\Babel-Infovox AB\Infovox 230
+2026-08-04 12:06:17,866 DEBUG Release <POINTER(IClassFactory) ptr=0x3500eb8 at 31ef350>
+2026-08-04 12:06:17,866 INFO Engine loaded via direct DllGetClassObject.
+2026-08-04 12:06:17,866 ERROR NO VOICES ENUMERATED. If the log shows the engine loaded but zero modes, a licensing gate (dongle/CrypKey) is still active. Confirm sx32w.dll (the emulator) sits next to Ivx230nt.dll.
+2026-08-04 12:06:17,866 DEBUG Release <POINTER(ITTSEnumW) ptr=0x3505c08 at 31ef440>
+2026-08-04 12:06:17,866 DEBUG Calling CoUninitialize()
+2026-08-04 12:06:17,866 DEBUG CoUninitialize() done.
