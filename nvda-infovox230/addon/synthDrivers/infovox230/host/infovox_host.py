@@ -25,6 +25,7 @@ import os
 import sys
 import time
 import json
+import array
 import struct
 import logging
 import threading
@@ -96,6 +97,124 @@ WAVE_FORMAT_PCM = 1
 
 
 # ---------------------------------------------------------------------------
+# Private registry hive.
+#
+# The engine reads ALL of its configuration from
+# HKCU\Software\Babel-Infovox AB\Infovox 230 -- the rule/lexicon/licence
+# directories and the entire 60-entry voice table (14 `push HKEY_CURRENT_USER`
+# sites in Ivx230nt.dll). Earlier versions of this add-on satisfied that by
+# writing those keys into the user's real registry on every start, and leaving
+# them there afterwards. That made the add-on neither self-contained nor
+# uninstallable-without-trace.
+#
+# Instead we load a hive FILE that lives inside the add-on, using
+# RegLoadAppKey: the hive is attached to this process under a root that is not
+# part of the registry namespace and cannot be reached by path. RegOverridePredefKey
+# then points *this process's* HKEY_CURRENT_USER at it, so every registry read
+# the engine performs resolves inside our own file. The user's registry is
+# neither written nor read, and the override dies with the host process.
+# ---------------------------------------------------------------------------
+ENGINE_REG_PATH = r"Software\Babel-Infovox AB\Infovox 230"
+ENGINE_REG_VENDOR = r"Software\Babel-Infovox AB"
+_HKEY_CURRENT_USER = 0x80000001
+_HKEY_LOCAL_MACHINE = 0x80000002
+_KEY_ALL_ACCESS = 0xF003F
+_ERROR_SUCCESS = 0
+
+
+class AppHive:
+    """A registry hive in a file, visible only to this process."""
+
+    def __init__(self):
+        self.handle = None       # wintypes.HKEY of the hive root
+        self.path = None
+        self.overriding = False
+
+    def load(self, path):
+        """Attach `path` as an application hive, creating it if absent
+        (RegLoadAppKey does that for us). Returns the root key handle as an int
+        that winreg can use."""
+        from ctypes import wintypes, c_wchar_p, c_long
+        adv = windll.advapi32
+        fn = adv.RegLoadAppKeyW
+        fn.argtypes = [c_wchar_p, POINTER(wintypes.HKEY), DWORD, DWORD, DWORD]
+        fn.restype = c_long
+        d = os.path.dirname(path)
+        if d:
+            os.makedirs(d, exist_ok=True)
+        hk = wintypes.HKEY()
+        # dwOptions=0 (not REG_PROCESS_APPKEY): a restarted host must be able
+        # to attach to the same hive while the previous one is still exiting.
+        rc = fn(path, byref(hk), _KEY_ALL_ACCESS, 0, 0)
+        if rc != _ERROR_SUCCESS:
+            raise OSError("RegLoadAppKey(%r) failed with %d" % (path, rc))
+        self.handle = hk
+        self.path = path
+        return int(hk.value)
+
+    def override_hkcu(self):
+        """Point this process's HKEY_CURRENT_USER at the hive."""
+        from ctypes import wintypes, c_long
+        adv = windll.advapi32
+        fn = adv.RegOverridePredefKey
+        fn.argtypes = [wintypes.HKEY, wintypes.HKEY]
+        fn.restype = c_long
+        rc = fn(wintypes.HKEY(_HKEY_CURRENT_USER), self.handle)
+        if rc != _ERROR_SUCCESS:
+            raise OSError("RegOverridePredefKey failed with %d" % rc)
+        self.overriding = True
+
+    def close(self):
+        from ctypes import wintypes
+        adv = windll.advapi32
+        if self.overriding:
+            try:
+                adv.RegOverridePredefKey(wintypes.HKEY(_HKEY_CURRENT_USER), None)
+            except Exception:
+                pass
+            self.overriding = False
+        if self.handle is not None:
+            try:
+                adv.RegCloseKey(self.handle)   # last handle closed -> unloaded
+            except Exception:
+                pass
+            self.handle = None
+
+
+def _delete_tree(root, path):
+    """Recursively delete a registry key. Returns True if it existed and is
+    gone, False if it was absent or could not be removed."""
+    import winreg
+    try:
+        k = winreg.OpenKey(root, path, 0, winreg.KEY_READ | winreg.KEY_WRITE)
+    except OSError:
+        return False
+    try:
+        while True:
+            try:
+                sub = winreg.EnumKey(k, 0)
+            except OSError:
+                break
+            if not _delete_tree(root, path + "\\" + sub):
+                return False
+    finally:
+        winreg.CloseKey(k)
+    try:
+        winreg.DeleteKey(root, path)
+        return True
+    except OSError:
+        return False
+
+
+def _same_dir(a, b):
+    try:
+        return os.path.normcase(os.path.abspath(a)) == \
+               os.path.normcase(os.path.abspath(b))
+    except Exception:
+        return False
+
+
+# ---------------------------------------------------------------------------
 # Capturing audio sink: implements IAudio + IAudioDest. Instead of playing,
 # it accumulates PCM and records the wave format and bookmark byte offsets.
 # Modelled on NVDA's SynthDriverAudio but synchronous and non-playing.
@@ -116,6 +235,13 @@ class CaptureAudio(COMObject):
         self.on_pcm = on_pcm         # optional streaming callback(bytes)
         self.on_format = None        # optional callback(wfx) on WaveFormatSet
         self.marks = []              # (byteOffset, markID) from IAudioDest.BookMark
+        # Output loudness is applied HERE, to the captured samples, because a
+        # capture sink is the audio device as far as SAPI4 is concerned: the
+        # engine hands loudness to the device (IAudio::LevelSet) rather than
+        # scaling the PCM itself, and merely storing that level (as this sink
+        # used to) makes every volume control a no-op.
+        self.gain_base = 1.0         # NVDA volume slider, 0.0 .. 1.0
+        self.gain_level = 1.0        # engine-requested IAudio level, 0.0 .. 1.0
 
     # ---- IAudio ----
     def IAudio_Flush(self):
@@ -125,7 +251,12 @@ class CaptureAudio(COMObject):
         return self._level
 
     def IAudio_LevelSet(self, dwLevel):
+        # Dual-channel volume DWORD (LOWORD left, HIWORD right), same layout
+        # as waveOutSetVolume. Engines route ITTSAttributes::VolumeSet and
+        # inline \Vol=...\ tags here; honour it instead of dropping it.
+        dwLevel = int(dwLevel) & 0xFFFFFFFF
         self._level = dwLevel
+        self.gain_level = max(dwLevel & 0xFFFF, (dwLevel >> 16) & 0xFFFF) / 0xFFFF
         return
 
     def IAudio_PassNotify(self, pNotifyInterface, IIDNotifyInterface):
@@ -194,13 +325,35 @@ class CaptureAudio(COMObject):
                 pass
         return
 
+    def _apply_gain(self, chunk):
+        """Scale a PCM chunk by the effective output gain (volume slider x
+        engine-requested level). 0.0 -> digital silence, 1.0 -> untouched
+        samples (the engine's real maximum). Chunk length never changes, so
+        byte offsets used for bookmarks stay valid."""
+        g = self.gain_base * self.gain_level
+        if g >= 0.999:
+            return chunk
+        bits = self.wfx.wBitsPerSample if self.wfx else 16
+        if g <= 0.0005:
+            # true minimum: silence (8-bit PCM is unsigned, centred on 0x80)
+            return (b"\x80" if bits == 8 else b"\x00") * len(chunk)
+        if bits == 8:
+            return bytes(min(255, max(0, 128 + int((b - 128) * g))) for b in chunk)
+        n = len(chunk) & ~1          # guard against a stray odd byte
+        a = array.array("h")
+        a.frombytes(chunk[:n])
+        for i in range(len(a)):
+            v = int(a[i] * g)
+            a[i] = -32768 if v < -32768 else (32767 if v > 32767 else v)
+        return a.tobytes() + chunk[n:]
+
     # ---- IAudioDest ----
     def IAudioDest_FreeSpace(self):
         return (self.free, 0)
 
     def IAudioDest_DataSet(self, pBuffer, dwSize):
         if pBuffer and dwSize:
-            chunk = string_at(pBuffer, dwSize)
+            chunk = self._apply_gain(string_at(pBuffer, dwSize))
             self.pcm += chunk
             self.written += dwSize
             if self.on_pcm:
@@ -250,6 +403,12 @@ class BufNotifySink(COMObject):
         self.audio = audio            # CaptureAudio, to read the byte position
         self.mark_offsets = []        # (byteOffset, markNum) in synthesis order
 
+    def reset(self):
+        """Prepare this sink for another utterance. One sink is reused for the
+        life of the selected voice -- see Engine.speak() for why."""
+        self.done.clear()
+        self.mark_offsets = []
+
     def ITTSBufNotifySink_TextDataDone(self, this, qTimeStamp, dwFlags):
         self.done.set()
         return
@@ -273,7 +432,8 @@ class BufNotifySink(COMObject):
 # Engine loading + a single Engine wrapper
 # ---------------------------------------------------------------------------
 class Engine:
-    def __init__(self, engine_dir, keep_registry=False, modes_json=None):
+    def __init__(self, engine_dir, keep_registry=False, modes_json=None,
+                 hive_path=None):
         self.engine_dir = os.path.abspath(engine_dir)
         self.keep_registry = keep_registry
         self.modes_json = modes_json
@@ -284,6 +444,10 @@ class Engine:
         self.sink = None
         self.sinkPtr = None
         self.sinkKey = DWORD()
+        self.buf = None          # reusable ITTSBufNotifySink implementation
+        self.bufPtr = None       # its interface pointer (handed to TextData)
+        self.mode_guid = None    # currently selected mode, for recycle()
+        self.last_ok = True      # did the last speak() reach TextDataDone?
         self.modes = []          # list of TTSMODEINFOW
         self.features = 0
         self.rate_min = self.rate_max = self.rate_def = None
@@ -293,6 +457,13 @@ class Engine:
         # before every utterance so an inline \Pit= change (e.g. NVDA's capital
         # pitch bump) doesn't persist into later utterances.
         self._base = {}
+        # Private registry hive holding the engine's configuration, so nothing
+        # is written to the user's registry. See AppHive.
+        self.hive = AppHive()
+        self.hive_path = hive_path or os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "infovox230.hive")
+        self._used_real_registry = False
 
     # -- load the engine and obtain an ITTSEnum --
     def load(self):
@@ -304,9 +475,7 @@ class Engine:
             pass
         os.chdir(self.engine_dir)
         if not self.keep_registry:
-            self._seed_registry()
-            if self.modes_json and os.path.exists(self.modes_json):
-                self._write_modes(self.modes_json)
+            self._setup_config()
         else:
             log.info("keep-registry: using existing engine registry config as-is")
 
@@ -323,44 +492,76 @@ class Engine:
         self.enum = CoCreateInstance(CLSID_TTSEnumerator, interface=ITTSEnumW)
         log.info("Engine reached via CLSID_TTSEnumerator.")
 
-    def _seed_registry(self):
-        """Best-effort: point the engine at our engine_dir for its rule files,
-        lexicons and licence dir. Old Infovox installs read these from
-        HKLM\\Software\\Babel-Infovox AB\\Infovox 230. We write HKCU (no admin)
-        and try HKLM too. Harmless if the engine ignores them."""
+    # -- engine configuration, without touching the user's registry ---------
+    def _setup_config(self):
+        """Give the engine its configuration through a private hive file.
+
+        Falls back to the real HKCU only if the hive cannot be used at all --
+        without config the engine enumerates no voices and the add-on is dead,
+        so a working fallback matters, but it is never the normal path."""
+        self._purge_legacy_keys()
+        for path, fresh in self._hive_candidates():
+            try:
+                if fresh and os.path.exists(path):
+                    os.remove(path)     # discard a corrupt/stale hive and retry
+                root = self.hive.load(path)
+                self._write_config(root)
+                self.hive.override_hkcu()
+                self.hive_path = path
+                log.info("engine config served from private hive %s "
+                         "(the Windows registry is not touched)", path)
+                return
+            except Exception as e:
+                log.warning("private hive %s unavailable (%s)", path, e)
+                try:
+                    self.hive.close()
+                except Exception:
+                    pass
+        log.error("no private hive could be used; falling back to HKCU. The "
+                  "add-on will work but will leave registry keys behind.")
         try:
             import winreg
+            self._write_config(winreg.HKEY_CURRENT_USER)
+            self._used_real_registry = True
         except Exception:
-            return
+            log.exception("could not configure the engine at all")
+
+    def _hive_candidates(self):
+        """Where to keep the hive file, best first. Second pass over the
+        preferred path deletes it, in case an earlier run left it corrupt."""
+        cands = [(self.hive_path, False), (self.hive_path, True)]
+        for env in ("LOCALAPPDATA", "APPDATA", "TEMP"):
+            base = os.environ.get(env)
+            if base:
+                cands.append((os.path.join(base, "infovox230",
+                                           "infovox230.hive"), False))
+        return cands
+
+    def _write_config(self, root):
+        """Write the engine's paths and voice table under `root` (a hive root
+        handle, or HKEY_CURRENT_USER in the fallback case)."""
+        import winreg
         d = self.engine_dir
         values = {
             "LanguageDir": d, "LicenseDir": d, "LexiconDir": d,
             "LanguageDirectory": d, "Path": d,
         }
-        subkey = r"Software\Babel-Infovox AB\Infovox 230"
-        for root, name in ((winreg.HKEY_CURRENT_USER, "HKCU"),
-                           (winreg.HKEY_LOCAL_MACHINE, "HKLM")):
-            try:
-                k = winreg.CreateKeyEx(root, subkey, 0, winreg.KEY_WRITE)
-                for vn, vv in values.items():
-                    winreg.SetValueEx(k, vn, 0, winreg.REG_SZ, vv)
-                winreg.CloseKey(k)
-                log.info("seeded engine paths in %s\\%s", name, subkey)
-            except Exception as e:
-                log.debug("could not seed %s registry (%s)", name, e)
-
-    def _write_modes(self, modes_json_path):
-        """Write the voice table (60 modes) into HKCU so the HKCU-patched engine
-        enumerates them. LanguageFile stays relative and resolves under
-        LanguageDir (= engine_dir). No admin required."""
+        k = winreg.CreateKeyEx(root, ENGINE_REG_PATH, 0, winreg.KEY_WRITE)
         try:
-            import winreg
-            modes = json.load(open(modes_json_path, "r"))
+            for vn, vv in values.items():
+                winreg.SetValueEx(k, vn, 0, winreg.REG_SZ, vv)
+        finally:
+            winreg.CloseKey(k)
+        if not (self.modes_json and os.path.exists(self.modes_json)):
+            log.warning("no modes.json; the engine will enumerate no voices")
+            return
+        try:
+            with open(self.modes_json, "r") as f:
+                modes = json.load(f)
         except Exception as e:
             log.warning("could not load modes.json (%s)", e)
             return
-        root = winreg.HKEY_CURRENT_USER
-        base = r"Software\Babel-Infovox AB\Infovox 230\Modes"
+        base = ENGINE_REG_PATH + "\\Modes"
         try:
             winreg.CreateKeyEx(root, base, 0, winreg.KEY_WRITE).Close()
         except Exception:
@@ -372,15 +573,62 @@ class Engine:
                 continue
             try:
                 k = winreg.CreateKeyEx(root, base + "\\" + name, 0, winreg.KEY_WRITE)
-                for vn, vv in m.items():
-                    if vn.startswith("_"):
-                        continue
-                    winreg.SetValueEx(k, vn, 0, winreg.REG_SZ, str(vv))
-                winreg.CloseKey(k)
+                try:
+                    for vn, vv in m.items():
+                        if vn.startswith("_"):
+                            continue
+                        winreg.SetValueEx(k, vn, 0, winreg.REG_SZ, str(vv))
+                finally:
+                    winreg.CloseKey(k)
                 n += 1
             except Exception as e:
                 log.debug("mode write failed for %s (%s)", name, e)
-        log.info("wrote %d voice modes to HKCU\\%s", n, base)
+        log.info("wrote %d voice modes into the engine config", n)
+
+    def _purge_legacy_keys(self):
+        """Delete the keys earlier versions of this add-on left in the real
+        registry. Must run BEFORE the HKCU override, so it really does operate
+        on the user's registry.
+
+        HKCU\\Software\\Babel-Infovox AB is ours: the original product installs
+        to HKLM, only this add-on ever wrote HKCU. In HKLM we remove the key
+        only if its paths point back into this add-on, so a genuine Infovox
+        installation on the same machine is left completely alone."""
+        try:
+            import winreg
+        except Exception:
+            return
+        if _delete_tree(winreg.HKEY_CURRENT_USER, ENGINE_REG_VENDOR):
+            log.info("removed leftover HKCU\\%s written by an earlier version",
+                     ENGINE_REG_VENDOR)
+        try:
+            k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, ENGINE_REG_PATH, 0,
+                               winreg.KEY_READ)
+        except OSError:
+            return
+        ours = False
+        try:
+            for vn in ("LanguageDir", "Path", "LanguageDirectory"):
+                try:
+                    val, _t = winreg.QueryValueEx(k, vn)
+                except OSError:
+                    continue
+                if isinstance(val, str) and _same_dir(val, self.engine_dir):
+                    ours = True
+                    break
+        finally:
+            winreg.CloseKey(k)
+        if not ours:
+            log.debug("HKLM\\%s exists but is not ours; leaving it alone",
+                      ENGINE_REG_PATH)
+            return
+        if _delete_tree(winreg.HKEY_LOCAL_MACHINE, ENGINE_REG_VENDOR):
+            log.info("removed leftover HKLM\\%s written by an earlier version",
+                     ENGINE_REG_VENDOR)
+        else:
+            log.info("HKLM\\%s was written by an earlier version but could not "
+                     "be removed (needs administrator); it is unused now",
+                     ENGINE_REG_PATH)
 
     def _load_direct(self):
         dllpath = None
@@ -449,6 +697,8 @@ class Engine:
         self.sinkPtr = None
         self.sink = None
         self.audio = None
+        self.buf = None
+        self.bufPtr = None
 
     # -- select a mode by gModeID GUID (string or GUID) --
     def select(self, mode_guid):
@@ -463,7 +713,20 @@ class Engine:
             if m.gModeID == mode_guid:
                 self.features = m.dwFeatures
                 break
+        self.mode_guid = mode_guid
         self.audio = CaptureAudio()
+        # a fresh sink starts at unity gain; re-seed the client's volume so a
+        # voice switch doesn't blast audio at full volume until the next 'P'
+        self.audio.gain_base = self._base.get("volume", 100) / 100.0
+        # ONE buffer-notify sink for the life of this mode. It used to be built
+        # per utterance, but this engine keeps the reference it is handed in
+        # TextData and never releases it, so every utterance leaked a COM
+        # object (verified: 16 created, 0 released). After a few minutes of
+        # normal NVDA speech the engine's internal object/window tables filled
+        # and it went silent while still accepting calls -- which is why only
+        # re-selecting the voice (this function) brought speech back.
+        self.buf = BufNotifySink(self.audio)
+        self.bufPtr = self.buf.QueryInterface(ITTSBufNotifySink)
         self.central = POINTER(ITTSCentralW)()
         self.enum.Select(mode_guid, byref(self.central), self.audio)
         # register a notify sink
@@ -515,6 +778,10 @@ class Engine:
                 v = DWORD(); self.attrs.VolumeGet(byref(v)); self.vol_def = v.value & 0xFFFF
                 self.attrs.VolumeSet(TTSATTR_MINVOLUME); self.attrs.VolumeGet(byref(v)); self.vol_min = v.value & 0xFFFF
                 self.attrs.VolumeSet(TTSATTR_MAXVOLUME); self.attrs.VolumeGet(byref(v)); self.vol_max = v.value & 0xFFFF
+                # Deliberately leave the engine's own volume pinned at MAX: the
+                # probe's last VolumeSet did that. NVDA's volume slider is
+                # applied to the captured PCM instead (CaptureAudio.gain_base),
+                # so the engine must always hand us full-scale samples.
             except COMError:
                 self.vol_min = self.vol_max = None
         log.info("ranges rate[%s..%s def %s] pitch[%s..%s] vol[%s..%s]",
@@ -523,11 +790,23 @@ class Engine:
 
     # -- set speech parameters directly (0..100 percent) --
     def set_param(self, which, percent, remember=True):
-        if not self.attrs:
-            return
         percent = max(0, min(100, int(percent)))
         if remember:
             self._base[which] = percent
+        if which == "volume":
+            # Loudness is applied to the captured PCM (CaptureAudio.gain_base),
+            # NOT via ITTSAttributes::VolumeSet. SAPI4 engines hand volume to
+            # the audio destination (IAudio::LevelSet) -- which a capture sink
+            # must apply itself -- and engines without TTSFEATURE_VOLUME ignore
+            # VolumeSet outright; both made the NVDA volume slider a no-op.
+            # Software gain guarantees 0% = silence, 100% = the engine's full
+            # output, with any engine. The engine's own volume attribute stays
+            # pinned at max (see _query_ranges).
+            if self.audio is not None:
+                self.audio.gain_base = percent / 100.0
+            return
+        if not self.attrs:
+            return
 
         def scale(lo, hi):
             return int(lo + (hi - lo) * percent / 100.0)
@@ -536,11 +815,30 @@ class Engine:
                 self.attrs.SpeedSet(scale(self.rate_min, self.rate_max))
             elif which == "pitch" and self.pitch_min is not None and self.pitch_max is not None:
                 self.attrs.PitchSet(scale(self.pitch_min, self.pitch_max))
-            elif which == "volume" and self.vol_min is not None and self.vol_max is not None:
-                v = scale(self.vol_min, self.vol_max) & 0xFFFF
-                self.attrs.VolumeSet(v | (v << 16))
         except COMError as e:
             log.warning("set_param %s failed: %s", which, e)
+
+    # -- rebuild the engine objects for the current mode (self-heal) --
+    def recycle(self):
+        """Tear down and re-create the ITTSCentral/audio/sinks for the current
+        mode, then restore rate/pitch/volume. This is exactly what selecting a
+        different synthesizer and coming back used to do by hand; doing it in
+        place means NVDA never has to."""
+        if self.mode_guid is None:
+            return False
+        log.warning("recycling engine for mode %s", str(self.mode_guid))
+        try:
+            self.select(self.mode_guid)
+        except Exception:
+            log.exception("engine recycle failed")
+            return False
+        for k, v in list(self._base.items()):
+            try:
+                self.set_param(k, v, remember=False)
+            except Exception:
+                pass
+        log.info("engine recycled OK")
+        return True
 
     # -- speak tagged text, block until done, return (pcm, wfx, marks) --
     def speak(self, tagged_text, pump, timeout=30.0, cancel_check=None):
@@ -552,13 +850,13 @@ class Engine:
         # utterance; inline tags within the text still override for this one.
         for _k, _v in list(self._base.items()):
             self.set_param(_k, _v, remember=False)
-        buf = BufNotifySink(self.audio)
-        bufPtr = buf.QueryInterface(ITTSBufNotifySink)
+        buf = self.buf
+        buf.reset()
         self.central.TextData(
             VOICECHARSET.CHARSET_TEXT,
             TTSDATAFLAG_TAGGED,
             TextSDATA(tagged_text),
-            cast(bufPtr, c_void_p),
+            cast(self.bufPtr, c_void_p),
             ITTSBufNotifySink._iid_,
         )
         # pump the message queue until the engine signals TextDataDone, the
@@ -575,7 +873,8 @@ class Engine:
                     pass
                 break
             time.sleep(0.002)
-        if not cancelled and not buf.done.is_set():
+        self.last_ok = cancelled or buf.done.is_set()
+        if not self.last_ok:
             log.warning("TextData timed out after %.1fs (no TextDataDone).", timeout)
         wfx = self.audio.wfx
         # Prefer the audio-sink marks (correct byte offsets); fall back to the
@@ -640,7 +939,10 @@ def write_wav(path, pcm, wfx):
 def cmd_selftest(args):
     CoInitialize()
     pump = make_pump()
-    eng = Engine(args.engine_dir, keep_registry=getattr(args, "keep_registry", False), modes_json=getattr(args, "modes", None))
+    eng = Engine(args.engine_dir,
+                 keep_registry=getattr(args, "keep_registry", False),
+                 modes_json=getattr(args, "modes", None),
+                 hive_path=getattr(args, "hive", None))
     eng.load()
     modes = eng.list_modes()
     if not modes:
@@ -717,7 +1019,10 @@ def cmd_serve(args):
     import socket
     CoInitialize()
     pump = make_pump()
-    eng = Engine(args.engine_dir, keep_registry=getattr(args, "keep_registry", False), modes_json=getattr(args, "modes", None))
+    eng = Engine(args.engine_dir,
+                 keep_registry=getattr(args, "keep_registry", False),
+                 modes_json=getattr(args, "modes", None),
+                 hive_path=getattr(args, "hive", None))
     eng.load()
     eng.list_modes()
 
@@ -742,14 +1047,22 @@ def cmd_serve(args):
     stop_evt = threading.Event()
 
     def reader():
-        while not stop_evt.is_set():
-            t, payload = _recv_frame(conn)
-            if t is None:
-                frames.put((None, None))
-                break
-            if t == "X":
-                cancel_evt.set()          # abort any in-progress speak
-            frames.put((t, payload))
+        # Must never die silently: if this thread stops, the main loop blocks
+        # on frames.get() forever and the host becomes a live-but-deaf zombie
+        # that keeps the socket open, i.e. permanent silence with no error.
+        try:
+            while not stop_evt.is_set():
+                t, payload = _recv_frame(conn)
+                if t is None:
+                    frames.put((None, None))
+                    break
+                if t == "X":
+                    cancel_evt.set()      # abort any in-progress speak
+                frames.put((t, payload))
+        except Exception:
+            log.exception("reader thread died; shutting host down")
+        finally:
+            frames.put((None, None))      # always unblock the main loop
     rt = threading.Thread(target=reader, name="ivxServeReader", daemon=True)
     rt.start()
 
@@ -817,8 +1130,26 @@ def cmd_serve(args):
                     if eng.audio.wfx:  # already known from a prior utterance
                         on_format(eng.audio.wfx)
                     cancel_evt.clear()
-                    _pcm, wfx, marks = eng.speak(tagged, pump,
-                                                 cancel_check=cancel_evt.is_set)
+                    pcm, wfx, marks = eng.speak(tagged, pump,
+                                                cancel_check=cancel_evt.is_set)
+                    # Self-heal: a live engine that returns no audio (or never
+                    # signals TextDataDone) for real text has gone bad. Rebuild
+                    # it and speak the utterance again -- this is the in-place
+                    # equivalent of switching synthesizers and back, so the
+                    # user never has to.
+                    # (only when NOTHING was produced -- a partial utterance is
+                    # already streamed, so re-speaking it would double audio)
+                    if not cancel_evt.is_set() and not pcm and _wants_audio(tagged):
+                        log.warning("utterance produced no audio (ok=%s); "
+                                    "recycling engine and retrying",
+                                    eng.last_ok)
+                        if eng.recycle():
+                            eng.audio.on_pcm = on_pcm
+                            eng.audio.on_format = on_format
+                            pcm, wfx, marks = eng.speak(
+                                tagged, pump, cancel_check=cancel_evt.is_set)
+                            if not pcm:
+                                log.error("still silent after recycle")
                     if not cancel_evt.is_set():
                         for off, num in marks:
                             _send(conn, "M", struct.pack("<II", off, num & 0xFFFFFFFF))
@@ -840,6 +1171,10 @@ def cmd_serve(args):
         stop_evt.set()
         try:
             conn.close()
+        except Exception:
+            pass
+        try:
+            eng.hive.close()   # restores HKCU and unloads the private hive
         except Exception:
             pass
         CoUninitialize()
@@ -874,7 +1209,10 @@ DEMO_CLIPS = [
 def cmd_speakmany(args):
     CoInitialize()
     pump = make_pump()
-    eng = Engine(args.engine_dir, keep_registry=getattr(args, "keep_registry", False), modes_json=getattr(args, "modes", None))
+    eng = Engine(args.engine_dir,
+                 keep_registry=getattr(args, "keep_registry", False),
+                 modes_json=getattr(args, "modes", None),
+                 hive_path=getattr(args, "hive", None))
     eng.load()
     modes = eng.list_modes()
     if not modes:
@@ -937,6 +1275,30 @@ def cmd_speakmany(args):
     return 0 if n_ok else 3
 
 
+def _wants_audio(tagged):
+    """True if this tagged string contains anything speakable. NVDA legitimately
+    sends index-only chunks (say-all callbacks) that produce no audio by design;
+    those must not be mistaken for engine failure."""
+    out = []
+    i = 0
+    n = len(tagged)
+    while i < n:
+        c = tagged[i]
+        if c == "\\":
+            if i + 1 < n and tagged[i + 1] == "\\":   # escaped backslash = text
+                out.append("\\")
+                i += 2
+                continue
+            j = tagged.find("\\", i + 1)              # skip a control tag
+            if j < 0:
+                break
+            i = j + 1
+            continue
+        out.append(c)
+        i += 1
+    return bool("".join(out).strip())
+
+
 def _tagged_from_request(p):
     text = p.get("text", "")
     if p.get("tagged"):
@@ -959,6 +1321,10 @@ def main(argv=None):
     ap.add_argument("--debug", action="store_true")
     ap.add_argument("--keep-registry", action="store_true",
                     help="use the existing engine registry config as-is (don't reseed paths)")
+    ap.add_argument("--hive", default=None,
+                    help="path to the private registry hive holding the engine's "
+                         "config (default: infovox230.hive beside the add-on). "
+                         "The Windows registry is never written.")
     _defmodes = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "modes.json")
     ap.add_argument("--modes", default=_defmodes if os.path.exists(_defmodes) else None,
                     help="path to modes.json; written to HKCU so the engine enumerates the voices")

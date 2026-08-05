@@ -13,6 +13,8 @@
 
 import os
 import json
+import time
+import locale
 import queue
 import struct
 import socket
@@ -22,6 +24,7 @@ from collections import OrderedDict, deque
 
 import config
 import nvwave
+import languageHandler
 from logHandler import log
 from synthDriverHandler import (
     SynthDriver,
@@ -44,6 +47,13 @@ ENGINE_DIR = os.path.join(PKG_DIR, "engine")            # engine DLLs + rules + 
 HOST_SCRIPT = os.path.join(PKG_DIR, "host", "infovox_host.py")
 PY32 = os.path.join(PKG_DIR, "python32", "python.exe")  # bundled 32-bit python
 PORT = 8765
+#: Ports tried in turn when (re)starting the host. A restarted host must not
+#: collide with the previous one still shutting down and holding the old port.
+PORT_RANGE = 20
+#: Give up on an utterance that has produced nothing for this long and treat
+#: the host as wedged. Longer than the host's own 30s TextData timeout so the
+#: host gets to self-heal first.
+STUCK_TIMEOUT = 35.0
 
 
 def _find_python32():
@@ -61,14 +71,35 @@ class _HostLink:
         self.proc = None
         self.sock = None
         self._wlock = threading.Lock()
+        self._port = PORT
+        self._drainer = None
+
+    def alive(self):
+        return self.proc is not None and self.proc.poll() is None
 
     def start(self):
+        last = None
+        for attempt in range(PORT_RANGE):
+            port = PORT + (self._port - PORT + attempt) % PORT_RANGE
+            try:
+                self._startOn(port)
+                self._port = PORT + (port - PORT + 1) % PORT_RANGE
+                return
+            except Exception as e:
+                last = e
+                log.debugWarning("infovox230: host start on port %d failed: %s"
+                                 % (port, e))
+                self.stop()
+        raise RuntimeError("Infovox host failed to start (see infovox230/host.log): %s"
+                           % (last,))
+
+    def _startOn(self, port):
         args = _find_python32() + [
             HOST_SCRIPT, "--engine-dir", ENGINE_DIR,
             "--log", os.path.join(PKG_DIR, "host.log"),
-            "serve", "--port", str(PORT),
+            "serve", "--port", str(port),
         ]
-        log.info("infovox230: launching host: %r", args)
+        log.info("infovox230: launching host on port %d: %r", port, args)
         self.proc = subprocess.Popen(
             args, cwd=ENGINE_DIR,
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
@@ -86,18 +117,46 @@ class _HostLink:
                 ready = True
                 break
         if not ready:
-            raise RuntimeError("Infovox host failed to start (see infovox230/host.log)")
-        self.sock = socket.create_connection(("127.0.0.1", PORT), timeout=10)
+            raise RuntimeError("host did not report READY")
+        self.sock = socket.create_connection(("127.0.0.1", port), timeout=10)
         try:
             self.sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         except Exception:
             pass
+        # Keep draining the host's stdout/stderr for the rest of its life. The
+        # pipe holds only a few KB: once full, the host BLOCKS on its next
+        # write -- mid-utterance, forever -- and speech dies with no error
+        # anywhere. Reading until READY and then walking away (as this used to)
+        # left that hazard armed for every byte the engine or Python wrote
+        # afterwards.
+        self._drainer = threading.Thread(target=self._drainStdout,
+                                         args=(self.proc,),
+                                         name="infovox230HostOut", daemon=True)
+        self._drainer.start()
+
+    @staticmethod
+    def _drainStdout(proc):
+        try:
+            for line in iter(proc.stdout.readline, b""):
+                line = line.decode("utf-8", "replace").rstrip()
+                if line:
+                    log.debug("infovox230 host: %s", line)
+        except Exception:
+            pass
+        finally:
+            try:
+                proc.stdout.close()
+            except Exception:
+                pass
 
     def send(self, t, payload=b""):
         if isinstance(payload, str):
             payload = payload.encode("utf-8")
         with self._wlock:
-            self.sock.sendall(t.encode("ascii") + struct.pack("<I", len(payload)) + payload)
+            sock = self.sock
+            if sock is None:
+                raise OSError("infovox230: host link is down")
+            sock.sendall(t.encode("ascii") + struct.pack("<I", len(payload)) + payload)
 
     def recv_frame(self):
         hdr = self._recv_exact(5)
@@ -111,8 +170,11 @@ class _HostLink:
     def _recv_exact(self, n):
         buf = b""
         while len(buf) < n:
+            sock = self.sock
+            if sock is None:
+                return None
             try:
-                chunk = self.sock.recv(n - len(buf))
+                chunk = sock.recv(n - len(buf))
             except OSError:
                 return None
             if not chunk:
@@ -131,11 +193,22 @@ class _HostLink:
                 self.sock.close()
         except Exception:
             pass
+        self.sock = None
+        proc, self.proc = self.proc, None
         try:
-            if self.proc:
-                self.proc.terminate()
+            if proc:
+                proc.terminate()
         except Exception:
             pass
+        # Reap it, so a wedged host can't linger holding its port or the engine.
+        try:
+            if proc:
+                proc.wait(timeout=5)
+        except Exception:
+            try:
+                proc.kill()
+            except Exception:
+                pass
 
 
 class SynthDriver(SynthDriver):
@@ -179,6 +252,14 @@ class SynthDriver(SynthDriver):
         self._inGen = -1                 # generation of frames arriving now
         self._fedBytes = 0               # bytes fed to the player this utterance
         self._doneGen = None             # gen for which 'D' (end) has arrived
+        # Host recovery state. If the host process dies or wedges, the driver
+        # restarts it in place and restores the voice and parameters, so speech
+        # comes back on its own instead of needing a manual synth switch.
+        self._recoverLock = threading.RLock()
+        self._recovering = False
+        self._recoverWhy = ""
+        self._speakStarted = 0.0         # when the current utterance was sent
+        self._lastRecover = 0.0
         # Dedicated audio thread. All WavePlayer.feed() calls happen here, and it
         # periodically flushes the player so its "chunk finished" callbacks fire
         # (NVDA's WavePlayer only checks them when fed) — that is what makes
@@ -212,8 +293,112 @@ class SynthDriver(SynthDriver):
             pass
         self._link.stop()
 
+    # ---- host recovery ----------------------------------------------------
+    def _requestRecover(self, why):
+        """Ask for the host to be restarted. Callable from any thread.
+
+        The restart itself is always performed by the reader thread (it owns
+        all socket reads), so this just records the reason and drops the
+        socket, which wakes the reader out of recv immediately."""
+        with self._recoverLock:
+            if self._recovering or not self._readerAlive:
+                return
+            self._recovering = True
+            self._recoverWhy = why
+        log.warning("infovox230: host restart requested (%s)", why)
+        self._releaseSpeech()             # never leave NVDA waiting on us
+        try:
+            self._link.stop()             # unblocks the reader thread
+        except Exception:
+            pass
+
+    def _doRecover(self):
+        """Restart the host and put it back exactly where it was: same voice,
+        same rate/pitch/volume. This is the in-place equivalent of switching
+        synthesizer and switching back -- which is what the user previously had
+        to do by hand. READER THREAD ONLY."""
+        with self._recoverLock:
+            why = getattr(self, "_recoverWhy", "link lost")
+            self._recovering = True
+        # Never spin: if the host refuses to stay up, back off between tries.
+        wait = 3.0 - (time.time() - self._lastRecover)
+        if wait > 0:
+            time.sleep(wait)
+        self._lastRecover = time.time()
+        ok = False
+        try:
+            log.warning("infovox230: restarting host (%s)", why)
+            self._playGen = -1
+            self._releaseSpeech()
+            try:
+                self._link.stop()
+            except Exception:
+                pass
+            while True:
+                try:
+                    self._ctrl.get_nowait()   # discard stale control responses
+                except queue.Empty:
+                    break
+            if not self._readerAlive:
+                return False       # terminated while we were tearing down
+            self._link.start()
+            if not self._readerAlive:
+                self._link.stop()  # driver shut down mid-restart; don't orphan it
+                return False
+            self._selectVoice(self._voice, sync=True)  # re-pushes rate/pitch/volume
+            ok = True
+            log.info("infovox230: host restarted; speech restored")
+        except Exception:
+            log.exception("infovox230: host restart failed; will retry")
+        finally:
+            with self._recoverLock:
+                self._recovering = False
+        return ok
+
+    def _syncRequest(self, t, payload=b"", timeout=15):
+        """Send a control frame and read its reply straight off the socket.
+        READER THREAD ONLY -- during recovery the queue-based _request() would
+        deadlock, because the thread that feeds that queue is the one doing the
+        recovering."""
+        self._link.send(t, payload)
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            rt, rp = self._link.recv_frame()
+            if rt is None:
+                raise RuntimeError("infovox230: link closed during %r" % t)
+            if rt in ("K", "E", "V"):
+                return rt, rp
+            # anything else is leftover audio from the fresh host: drop it
+        raise RuntimeError("infovox230: timed out waiting for %r response" % t)
+
+    def _releaseSpeech(self):
+        """Unblock NVDA after a lost utterance: fire the indexes it is waiting
+        on and then synthDoneSpeaking, otherwise say-all stalls forever."""
+        with self._audioCond:
+            self._audioQ.clear()
+        self._pendingMarks.clear()
+        indexes, self._utteranceIndexes = self._utteranceIndexes, []
+        self._doneGen = None
+        wasSpeaking = self._speaking
+        self._speaking = False
+        try:
+            for num in indexes:
+                synthIndexReached.notify(synth=self, index=num)
+        except Exception:
+            pass
+        if wasSpeaking:
+            try:
+                synthDoneSpeaking.notify(synth=self)
+            except Exception:
+                pass
+
     # ---- request/response over the control queue ----
     def _request(self, t, payload=b"", expect=("K", "E", "V"), timeout=15):
+        while True:
+            try:
+                self._ctrl.get_nowait()   # a late reply must not answer this one
+            except queue.Empty:
+                break
         self._link.send(t, payload)
         try:
             rt, rp = self._ctrl.get(timeout=timeout)
@@ -222,29 +407,96 @@ class SynthDriver(SynthDriver):
         return rt, rp
 
     # ---- voices ----
+    @staticmethod
+    def _localeFromLangid(langid):
+        """Map a SAPI4 LANGID (a WORD) to a Windows locale name like "sv_SE".
+        Old SAPI4 engines are sloppy with sublanguage bits, so unknown ids are
+        retried with SUBLANG_DEFAULT and finally reduced to the bare primary
+        language ("sv"). Returns None only when the id is missing or truly
+        unknown; callers must treat None as "language not known"."""
+        try:
+            langid = int(langid)
+        except (TypeError, ValueError):
+            return None
+        if langid <= 0:
+            return None
+        lang = locale.windows_locale.get(langid)
+        if lang:
+            return lang
+        primary = langid & 0x3FF
+        # MAKELANGID(primary, SUBLANG_DEFAULT): SUBLANG_DEFAULT (1) << 10
+        lang = locale.windows_locale.get(0x0400 | primary)
+        if lang:
+            return lang
+        for lid, name in sorted(locale.windows_locale.items()):
+            if lid & 0x3FF == primary:
+                return name.split("_")[0]
+        return None
+
     def _loadVoices(self):
         rt, rp = self._request("L")
         if rt != "V":
             raise RuntimeError("expected voice list, got %r" % rt)
         arr = json.loads(rp.decode("utf-8"))
-        import locale
         voices = OrderedDict()
         for v in arr:
             vid = v["id"]
             name = v["name"] or v["product"] or vid
             if v.get("speaker") and v["speaker"] not in name:
                 name = "%s (%s)" % (name, v["speaker"])
-            language = None
-            try:
-                language = locale.windows_locale.get(v.get("langid"))
-            except Exception:
-                pass
+            language = self._localeFromLangid(v.get("langid"))
+            if not language:
+                log.debugWarning(
+                    "infovox230: no locale for voice %r (langid=%r)"
+                    % (name, v.get("langid")))
             voices[vid] = VoiceInfo(vid, name, language)
         log.info("infovox230: %d voices enumerated", len(voices))
         return voices
 
     def _getAvailableVoices(self):
         return self._voices
+
+    def _get_availableLanguages(self):
+        # NVDA 2026.1's SynthDriver.languageIsSupported() calls
+        # languageHandler.normalizeLanguage() on every member of this set
+        # without a None guard; a single voice whose language is unknown then
+        # crashes the getSpeechSequenceWithLangs speech filter on every
+        # utterance ("AttributeError: 'NoneType' object has no attribute
+        # 'replace'"). Never expose unknown (None/empty) languages.
+        return {v.language for v in self._voices.values() if v.language}
+
+    def languageIsSupported(self, lang):
+        # Replaces the base implementation, which in NVDA 2026.1 assumes every
+        # available language is a normalizable string. This runs inside NVDA's
+        # speech filter for every utterance, so it must never raise.
+        try:
+            if lang is None:
+                return True
+            normalized = languageHandler.normalizeLanguage(lang)
+            if not normalized:
+                return False
+            available = self.availableLanguages
+            if not available:
+                # The engine reported no usable language metadata at all;
+                # claiming "unsupported" would just make NVDA announce
+                # "(not supported)" before most foreign text. Stay quiet.
+                return True
+            root = normalized.split("_")[0]
+            for availableLang in available:
+                if not availableLang:
+                    continue
+                normalizedAvailable = languageHandler.normalizeLanguage(
+                    availableLang)
+                if not normalizedAvailable:
+                    continue
+                if (normalized == normalizedAvailable
+                        or root == normalizedAvailable.split("_")[0]):
+                    return True
+            return False
+        except Exception:
+            log.debugWarning("infovox230: languageIsSupported failed",
+                             exc_info=True)
+            return True
 
     def _get_voice(self):
         return self._voice
@@ -253,10 +505,18 @@ class SynthDriver(SynthDriver):
         if value not in self._voices:
             return
         self._voice = value
-        self._selectVoice(value)
+        try:
+            self._selectVoice(value)
+        except Exception:
+            log.warning("infovox230: voice select failed", exc_info=True)
+            self._requestRecover("voice select failed")
 
-    def _selectVoice(self, vid):
-        rt, rp = self._request("S", vid)
+    def _selectVoice(self, vid, sync=False):
+        # sync=True is the recovery path: the reader thread does its own socket
+        # reads, because it is the thread that would otherwise be feeding the
+        # response queue it is waiting on.
+        req = self._syncRequest if sync else self._request
+        rt, rp = req("S", vid)
         if rt == "K":
             info = json.loads(rp.decode("utf-8") or "{}")
             fmt = info.get("format") or {}
@@ -267,7 +527,7 @@ class SynthDriver(SynthDriver):
                 self._fmt = fmt
                 self._initPlayer()
             # re-apply current parameters to the new voice
-            self._pushParams()
+            self._pushParams(sync=sync)
         elif rt == "E":
             log.error("infovox230: select failed: %s", rp.decode("utf-8", "replace"))
 
@@ -297,29 +557,41 @@ class SynthDriver(SynthDriver):
             self._initPlayer()
 
     # ---- parameters (0..100) ----
+    def _setParam(self, **kw):
+        """Push one parameter. A dead or wedged host must not turn a slider
+        nudge into an exception in NVDA's settings UI; ask for a restart and
+        carry on, and the value is re-applied once the host is back."""
+        try:
+            self._request("P", json.dumps(kw))
+        except Exception:
+            log.warning("infovox230: setting %s failed", ", ".join(kw),
+                        exc_info=True)
+            self._requestRecover("parameter update failed")
+
     def _get_rate(self):
         return self._rate
 
     def _set_rate(self, value):
         self._rate = max(0, min(100, value))
-        self._request("P", json.dumps({"rate": self._rate}))
+        self._setParam(rate=self._rate)
 
     def _get_pitch(self):
         return self._pitch
 
     def _set_pitch(self, value):
         self._pitch = max(0, min(100, value))
-        self._request("P", json.dumps({"pitch": self._pitch}))
+        self._setParam(pitch=self._pitch)
 
     def _get_volume(self):
         return self._volume
 
     def _set_volume(self, value):
         self._volume = max(0, min(100, value))
-        self._request("P", json.dumps({"volume": self._volume}))
+        self._setParam(volume=self._volume)
 
-    def _pushParams(self):
-        self._request("P", json.dumps(
+    def _pushParams(self, sync=False):
+        req = self._syncRequest if sync else self._request
+        req("P", json.dumps(
             {"rate": self._rate, "pitch": self._pitch, "volume": self._volume}))
 
     # ---- speaking ----
@@ -342,13 +614,21 @@ class SynthDriver(SynthDriver):
         self._utteranceIndexes = [it.index for it in speechSequence
                                   if isinstance(it, IndexCommand)]
         self._speaking = True
+        self._speakStarted = time.time()
         # make sure the player is ready to accept a fresh utterance
         try:
             if self._player:
                 self._player.pause(False)
         except Exception:
             pass
-        self._link.send("T", json.dumps({"text": tagged, "tagged": True, "id": gen}))
+        payload = json.dumps({"text": tagged, "tagged": True, "id": gen})
+        try:
+            self._link.send("T", payload)
+        except Exception:
+            # The host died or its socket is gone. Get it restarted; this
+            # utterance is lost, but speech resumes by itself from the next one
+            # instead of staying dead until the user switches synthesizer.
+            self._requestRecover("send failed")
 
     def _buildTagged(self, speechSequence):
         parts = []
@@ -382,6 +662,7 @@ class SynthDriver(SynthDriver):
         # is what makes interruption feel instant).
         self._playGen = -1
         self._speaking = False
+        self._speakStarted = 0.0
         self._pendingMarks.clear()
         self._utteranceIndexes = []
         with self._audioCond:
@@ -410,7 +691,15 @@ class SynthDriver(SynthDriver):
             try:
                 t, payload = self._link.recv_frame()
                 if t is None:
-                    break
+                    # Socket closed: the host exited, was killed, or a wedge was
+                    # detected and someone dropped the link on purpose. Bringing
+                    # it back here is what stops "it just went silent" from being
+                    # permanent -- this loop used to simply break, leaving the
+                    # driver alive but deaf until the user switched synths.
+                    if not self._readerAlive:
+                        break
+                    self._doRecover()
+                    continue
                 if t == "A":
                     with self._audioCond:
                         self._audioQ.append(("A", self._inGen, payload))
@@ -453,6 +742,7 @@ class SynthDriver(SynthDriver):
                     except Exception:
                         pass
                 self._checkDone()
+                self._checkStuck()
                 continue
             try:
                 if item[0] == "A":
@@ -469,6 +759,23 @@ class SynthDriver(SynthDriver):
                         self._checkDone()
             except Exception:
                 log.exception("infovox230 audio error (continuing)")
+
+    def _checkStuck(self):
+        """Watchdog. If an utterance was sent and the host has neither streamed
+        audio nor reported 'D' within STUCK_TIMEOUT, or the host process has
+        exited outright, the link is wedged: restart it. This is the backstop
+        that makes silence self-correcting no matter what caused it."""
+        if not self._speaking or self._recovering:
+            return
+        started = self._speakStarted
+        if not started:
+            return
+        stalled = (time.time() - started > STUCK_TIMEOUT
+                   and self._fedBytes == 0 and self._doneGen is None)
+        if stalled:
+            self._requestRecover("no audio for %.0fs" % STUCK_TIMEOUT)
+        elif not self._link.alive():
+            self._requestRecover("host process exited")
 
     def _onChunkPlayed(self, size):
         # Called by WavePlayer when a chunk finishes; updates progress + marks.
@@ -505,4 +812,5 @@ class SynthDriver(SynthDriver):
                 synthIndexReached.notify(synth=self, index=num)
             self._utteranceIndexes = []
             self._speaking = False
+            self._speakStarted = 0.0
             synthDoneSpeaking.notify(synth=self)

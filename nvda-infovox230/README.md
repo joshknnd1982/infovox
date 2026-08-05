@@ -19,10 +19,18 @@ formant voices (Male, Female, Giant, Child, Zombie).
    **Infovox 230 (Telia Promotor)**, then pick a voice and adjust rate / pitch /
    volume.
 
-The first time you select the synthesizer it writes its voice table into your
-per-user registry (`HKCU`) and starts the engine — this takes a few seconds
-once; afterwards it is immediate. Nothing is written to system locations and no
-UAC prompt appears.
+The first time you select the synthesizer it builds its voice table and starts
+the engine — this takes a few seconds once; afterwards it is immediate. No UAC
+prompt appears.
+
+**Nothing is written to the Windows registry.** The engine insists on reading
+its configuration from `HKCU\Software\Babel-Infovox AB\Infovox 230`, so the host
+loads a private hive file (`infovox230.hive`, inside the add-on folder) with
+`RegLoadAppKey` and points *its own process's* `HKEY_CURRENT_USER` at it with
+`RegOverridePredefKey`. The engine's registry reads land in that file; your real
+registry is never read or written, and the redirection disappears when the host
+process exits. Removing the add-on folder removes every trace. Keys written by
+earlier versions of this add-on are deleted automatically on first run.
 
 ## How it works
 
@@ -34,7 +42,7 @@ bridges that gap:
  NVDA 2026.1 (64-bit)                          bundled host (32-bit Python)
  ┌───────────────────────────┐   127.0.0.1 TCP  ┌────────────────────────────┐
  │ synthDrivers/infovox230.py │ ───────────────► │ host/infovox_host.py       │
- │  • lists 60 voices         │  control frames  │  • writes voice table→HKCU │
+ │  • lists 60 voices         │  control frames  │  • voice table→private hive│
  │  • builds tagged text      │                  │  • LoadLibrary Ivx230nt.dll│
  │  • nvwave.WavePlayer        │ ◄─────────────── │  • ITTSCentral.TextData     │
  │  • fires index / done       │  PCM + marks     │  • captures PCM (IAudioDest)│
@@ -58,7 +66,7 @@ self-contained on Windows 11:
 | `0x15b50` | Rainbow SuperPro dongle check | always report authorized |
 | `0x0a4c9` | `GetUlexInstance` treats missing user lexicon as fatal | make it non-fatal (lexicon is optional) |
 | `0x09dec` | `Init` rejects mode unless licence-type 1/2/3 | accept and proceed |
-| 10 sites | engine reads config/voices/lexicon from `HKLM` | read per-user `HKCU` (no admin) |
+| 10 sites | engine reads config/voices/lexicon from `HKLM` | read per-user `HKCU` (no admin), which the host then redirects into a private hive file so the real registry is untouched |
 
 The voice definitions themselves come from the engine's own trial installer,
 which does run on Windows 11 and supplied the correct speaker/formant data.

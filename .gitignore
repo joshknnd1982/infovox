@@ -2,3 +2,18 @@
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Runtime artefacts created by the host on the machine it runs on
+*.hive
+host.log
+
+# Bytecode from local test runs of our own source. NOTE: the bundled 32-bit
+# interpreter's own .pyc files under python32/ are tracked on purpose -- they
+# ship inside the add-on and make the host start faster.
+nvda-infovox230/addon/synthDrivers/__pycache__/
+nvda-infovox230/host/__pycache__/
+nvda-infovox230/tools/__pycache__/
+
+# Built add-on packages are published as GitHub Release assets, not committed
+# (each build is ~25 MB and would live in the repo history forever).
+*.nvda-addon

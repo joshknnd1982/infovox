@@ -50,10 +50,19 @@ def main():
     if os.path.exists(out):
         os.remove(out)
 
+    # Runtime artefacts must never be shipped: the private registry hive is
+    # created per machine on first run, and host.log is per session. The
+    # bundled interpreter's own .pyc files ARE shipped on purpose -- they make
+    # the host start faster, which matters when it is restarted.
+    def skip(fn):
+        return fn.lower().endswith((".hive", ".log"))
+
     count = 0
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         for base, _dirs, files in os.walk(ADDON):
             for fn in files:
+                if skip(fn):
+                    continue
                 full = os.path.join(base, fn)
                 z.write(full, os.path.relpath(full, ADDON))
                 count += 1

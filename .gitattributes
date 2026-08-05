@@ -1,0 +1,20 @@
+# Normalise line endings on commit so a Windows checkout (CRLF) does not show
+# every text file in the tree as modified. Without this, `git status` reports
+# ~1100 phantom changes.
+* text=auto
+
+# Binaries: never touched, never diffed as text.
+*.dll   binary
+*.exe   binary
+*.pyd   binary
+*.ivx   binary
+*.IVX   binary
+*.cab   binary
+*.wav   binary
+*.hive  binary
+*.nvda-addon binary
+*.zip   binary
+*.inx   binary
+*.shl   binary
+*.lic   binary
+*.bin   binary
