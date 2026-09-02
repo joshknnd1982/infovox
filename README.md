@@ -12,7 +12,7 @@ formant voices (Male, Female, Giant, Child, Zombie).
 
 ## Download & install
 
-Grab the ready-to-install `infovox230-0.1.nvda-addon` from the
+Grab the ready-to-install `infovox230-0.4.nvda-addon` from the
 [**Releases**](../../releases) page, then in NVDA: **Tools → Add-on Store →
 Install from external source**, and restart when prompted. Full instructions are
 in [`nvda-infovox230/README.md`](nvda-infovox230/README.md).
@@ -23,7 +23,8 @@ NVDA is 64-bit and cannot load the 32-bit Infovox SAPI4 engine in-process, which
 is why these voices went silent. The add-on bridges that gap: the 64-bit NVDA
 driver launches a bundled 32-bit host that hosts the engine and streams audio +
 index marks back over a localhost socket. The engine binary is patched to run
-free of its original dongle and license manager. The full reverse-engineering
+free of its original dongle and license manager, and to load at the fixed image
+base its un-relocated absolute addresses require. The full reverse-engineering
 write-up — including the exact binary patch offsets — is in
 [`nvda-infovox230/ARCHITECTURE.md`](nvda-infovox230/ARCHITECTURE.md).
 
@@ -31,13 +32,15 @@ write-up — including the exact binary patch offsets — is in
 
 - **`nvda-infovox230/`** — the add-on and its complete source: the NVDA driver,
   the 32-bit host, the bundled engine and rule sets, the 32-bit Python runtime,
-  the Sx32w dongle-emulator stub, build/test tooling, `ARCHITECTURE.md`, and the
-  built `infovox230-0.1.nvda-addon`.
+  the Sx32w dongle-emulator stub, build/test tooling, and `ARCHITECTURE.md`.
+  Run `python nvda-infovox230/build.py` to rebuild the `.nvda-addon` from it.
 - **Top-level files** — the original **Infovox 230 v2.2 installer**
   (`Infovox230v2_2complete.exe`), its extracted contents (`data1/`, `data2/`,
   the `*.IVX` rule sets, the original `*.exe` tools), and runtime DLLs. These are
   preserved for reproducibility so the patches can be re-derived from the
-  originals. The same installer is also mirrored on the Internet Archive.
+  originals — `nvda-infovox230/tools/apply_engine_patch.py` and
+  `strip_engine_relocs.py` regenerate the shipped engine byte-for-byte. The
+  same installer is also mirrored on the Internet Archive.
 
 ## Licensing
 

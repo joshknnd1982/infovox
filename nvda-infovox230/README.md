@@ -13,7 +13,7 @@ formant voices (Male, Female, Giant, Child, Zombie).
 ## Install
 
 1. In NVDA: **NVDA menu → Tools → Add-on Store → Install from external source**,
-   and choose `infovox230-0.1.nvda-addon`.
+   and choose `infovox230-0.4.nvda-addon`.
 2. Restart NVDA when prompted.
 3. **NVDA menu → Preferences → Settings → Speech**, set **Synthesizer** to
    **Infovox 230 (Telia Promotor)**, then pick a voice and adjust rate / pitch /
@@ -75,13 +75,13 @@ which does run on Windows 11 and supplied the correct speaker/formant data.
 
 ```
 nvda-infovox230/
-  infovox230-0.1.nvda-addon      the installable add-on  ← install this
+  build.py                       rebuilds infovox230-<version>.nvda-addon from addon/
   README.md                      this file
   ARCHITECTURE.md                how it works + reverse-engineering notes
   addon/                         the add-on source tree (engine, host, driver, python32, modes.json)
   host/                          host + SAPI4 interface source (mirrors addon/…/host)
   sx32w_stub/                    the dongle emulator + its generator
-  tools/                         diagnostics + the test harnesses used to bring it up
+  tools/                         engine patchers, diagnostics + the bring-up test harnesses
   _run/                          proof WAVs and logs from bring-up (first_speech.wav, all_voices.wav, …)
 ```
 

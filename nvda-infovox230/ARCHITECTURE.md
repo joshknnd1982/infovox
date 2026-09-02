@@ -126,6 +126,26 @@ The host tries, in order:
 The self-test log (`_run/selftest.log`) records which path succeeded and every
 voice/mode the engine reported.
 
+### Fixed image base (why relocations are stripped)
+
+`Ivx230nt.dll` holds absolute addresses that its own relocation table does not
+cover, so it is only correct at its preferred base, `0x10000000`. Windows is
+free to map it elsewhere, and under mandatory ASLR (Exploit Protection's
+*Force randomization for images* / `ForceRelocateImages`) it always does — the
+engine then dereferences stale pointers and the host dies with `0xC0000005` on
+the first synthesis call. This was the crash reported on hardened machines.
+
+The shipped engine therefore has `IMAGE_FILE_RELOCS_STRIPPED` set in its COFF
+`Characteristics` (file offset `0x11E`, `0x210E` → `0x210F`) and its
+`IMAGE_DIRECTORY_ENTRY_BASERELOC` data-directory entry zeroed (file offset
+`0x1A8`, was RVA `0x59000` / size `0x2EC0`). A PE with relocations stripped
+cannot be moved: the loader must honour the preferred base or fail the load.
+Five bytes change, all in the headers; no code is touched, the `.reloc`
+section body is left in place, and every other RVA and file offset — including
+the dongle patch site at `0x15B50` — is unaffected. `tools/strip_engine_relocs.py`
+performs and documents the patch; the host additionally asserts the module
+landed at `0x10000000` and refuses to run rather than crash if it did not.
+
 ## 5. Known unknowns (to confirm on Windows)
 
 - Whether the engine's coclass yields `ITTSEnum` directly (path 1) or requires

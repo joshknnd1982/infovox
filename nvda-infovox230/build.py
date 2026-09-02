@@ -55,7 +55,10 @@ def main():
     # bundled interpreter's own .pyc files ARE shipped on purpose -- they make
     # the host start faster, which matters when it is restarted.
     def skip(fn):
-        return fn.lower().endswith((".hive", ".log"))
+        low = fn.lower()
+        # The hive's transaction logs are named "<name>.hive.LOG1"/".LOG2",
+        # which end in neither ".hive" nor ".log" -- match them explicitly.
+        return low.endswith((".hive", ".log")) or ".hive.log" in low
 
     count = 0
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:

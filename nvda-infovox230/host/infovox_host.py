@@ -642,6 +642,18 @@ class Engine:
         self._hmod = windll.kernel32.LoadLibraryW(dllpath)
         if not self._hmod:
             raise OSError("LoadLibrary failed: %d" % windll.kernel32.GetLastError())
+        # The engine keeps absolute addresses that its relocation table does
+        # not cover, so it only runs correctly at its preferred base. Its
+        # relocations are stripped precisely so Windows cannot move it (that
+        # also defeats mandatory ASLR / ForceRelocateImages, which is what
+        # crashed the host with 0xC0000005 on hardened machines). If it
+        # somehow still landed elsewhere, refuse instead of crashing.
+        base = self._hmod & 0xFFFFFFFF
+        if base != 0x10000000:
+            raise OSError(
+                "Ivx230nt.dll loaded at 0x%08X instead of its required base "
+                "0x10000000; it would crash if used from there." % base)
+        log.info("engine image base 0x%08X (required)", base)
         proc = windll.kernel32.GetProcAddress(self._hmod, b"DllGetClassObject")
         if not proc:
             raise OSError("DllGetClassObject not exported")
