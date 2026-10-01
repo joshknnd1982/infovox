@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # infovox_host.py -- 32-bit host process for the Infovox 230 SAPI4 engine.
 #
-# Runs under 32-bit CPython. Loads the (public-domain) Infovox 230 SAPI4 engine
+# Runs under 32-bit CPython. Loads the Infovox 230 SAPI4 engine
 # in-process, drives it with the same call flow NVDA's own sapi4 driver uses,
 # and captures synthesized PCM through a custom IAudio/IAudioDest sink instead
 # of sending it to a sound card.
@@ -18,7 +18,7 @@
 # (see sx32w_stub/). No CrypKey, no hardware, no registration required for the
 # direct-load path.
 #
-# Copyright: engine is public domain (Telia Promotor / Babel-Infovox, defunct).
+# Engine: Telia Promotor / Babel-Infovox (both defunct).
 # This host and the _sapi4 interface glue are GPL v2 (derived from NVDA).
 
 import os

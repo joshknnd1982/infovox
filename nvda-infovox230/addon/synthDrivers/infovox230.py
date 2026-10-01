@@ -9,7 +9,7 @@
 # Exposes every enumerated voice/language and the rate, pitch and volume
 # parameters the selected voice supports.
 #
-# GPL v2 (NVDA add-on). The engine it drives is public domain.
+# GPL v2 (NVDA add-on).
 
 import os
 import json

@@ -1,7 +1,7 @@
 # Infovox 230 → NVDA 2026.1 add-on
 
 Brings the long-abandoned **Infovox 230** text-to-speech engine (Telia Promotor
-/ Babel-Infovox, both defunct; the engine is public domain) back to life as a
+/ Babel-Infovox, both defunct) back to life as a
 **self-contained synthesizer add-on for NVDA 2026.1** — **60 voices across 12
 languages**, no hardware dongle, no CrypKey, no 16-bit license manager, and **no
 administrator rights** required.

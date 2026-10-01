@@ -29,9 +29,9 @@ The full text of the GPL version 2 is available at:
 ----------------------------------------------------
 The Infovox 230 text-to-speech engine (`Ivx230nt.dll`), its language rule sets
 (`*.IVX`, `darules.dll`), and the voice/speaker definitions originate from Telia
-Promotor / Babel-Infovox AB. Both companies are defunct and the software is in
-the public domain; it is included here with the maintainer's stated permission
-to use and modify it freely. The engine binary in this repository has been
+Promotor / Babel-Infovox AB. Both companies are defunct; the software is
+included here with the maintainer's stated permission to use and modify it
+freely. The engine binary in this repository has been
 patched (see `nvda-infovox230/ARCHITECTURE.md`) to run without its original
 hardware dongle and license manager.
 

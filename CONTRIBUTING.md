@@ -8,7 +8,7 @@ welcome.
 
 The add-on code is **GPL v2** (see [`LICENSE`](LICENSE)). By contributing, you
 agree that your contributions are licensed under the same terms. The Infovox
-engine itself is public domain; the third-party binaries preserved from the
+engine is included with its maintainer's permission; the third-party binaries preserved from the
 original installer keep their own licenses.
 
 ## How to contribute

@@ -1,7 +1,7 @@
 # Infovox 230 → NVDA 2026.1 add-on
 
 Reviving the long-abandoned **Infovox 230** text-to-speech engine (Telia
-Promotor / Babel-Infovox, both defunct; the engine is public domain) as a
+Promotor / Babel-Infovox, both defunct) as a
 **self-contained synthesizer add-on for the NVDA screen reader** — **60 voices
 across 12 languages**, with no hardware dongle, no CrypKey, no 16-bit license
 manager, and no administrator rights required.
@@ -45,8 +45,8 @@ write-up — including the exact binary patch offsets — is in
 ## Licensing
 
 Mixed — see [`LICENSE`](LICENSE) for details. In short: the add-on code is
-GPLv2; the Infovox engine, rule sets, and voice data are public domain and
-included with permission; and the third-party components inside the original
+GPLv2; the Infovox engine, rule sets, and voice data are included with
+permission; and the third-party components inside the original
 installer (Microsoft runtimes, CrypKey, InstallShield) remain under their own
 licenses and are included only as original installer materials.
 
