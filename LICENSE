@@ -1,46 +1,22 @@
-Infovox 230 -> NVDA add-on
-==========================
+MIT License
 
-This repository contains material under several different licenses. Read this
-file before redistributing.
+Copyright (c) 2026 Josh Kennedy
 
-1. Add-on code (the parts written for this project)
----------------------------------------------------
-The NVDA synthesizer driver, the 32-bit host, the Sx32w dongle-emulator stub,
-and the tooling/tests -- i.e. everything under `nvda-infovox230/addon/synthDrivers/infovox230.py`,
-`nvda-infovox230/host/`, `nvda-infovox230/sx32w_stub/`, and `nvda-infovox230/tools/`
--- are licensed under the GNU General Public License, version 2, to match NVDA
-and its add-ons.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the Free
-    Software Foundation; either version 2 of the License, or (at your option)
-    any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-    This program is distributed in the hope that it will be useful, but WITHOUT
-    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-    FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-    more details.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-The full text of the GPL version 2 is available at:
-    https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
-
-2. The Infovox 230 engine, rule sets, and voice data
-----------------------------------------------------
-The Infovox 230 text-to-speech engine (`Ivx230nt.dll`), its language rule sets
-(`*.IVX`, `darules.dll`), and the voice/speaker definitions originate from Telia
-Promotor / Babel-Infovox AB. Both companies are defunct; the software is
-included here with the maintainer's stated permission to use and modify it
-freely. The engine binary in this repository has been
-patched (see `nvda-infovox230/ARCHITECTURE.md`) to run without its original
-hardware dongle and license manager.
-
-3. Third-party components in the original installer
----------------------------------------------------
-The preserved original installer (`Infovox230v2_2complete.exe`) and its
-extracted contents include third-party components that are NOT covered by the
-above and remain under their own respective licenses -- notably Microsoft
-runtime libraries (`MFC40.DLL`, `mfc42.dll`, `msvcrt40.dll`, `OLEPRO32.DLL`),
-CrypKey licensing files, and InstallShield installer components. They are
-included only as part of the original, already-publicly-archived installer
-materials and are not relicensed here.

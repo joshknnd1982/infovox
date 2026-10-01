@@ -44,11 +44,14 @@ write-up — including the exact binary patch offsets — is in
 
 ## Licensing
 
-Mixed — see [`LICENSE`](LICENSE) for details. In short: the add-on code is
-GPLv2; the Infovox engine, rule sets, and voice data are included with
-permission; and the third-party components inside the original
-installer (Microsoft runtimes, CrypKey, InstallShield) remain under their own
-licenses and are included only as original installer materials.
+Mixed — see [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md) for details. In
+short: the code written for this project is licensed under the MIT License,
+except the NVDA driver, the 32-bit host and the SAPI 4 interface file
+(`infovox230.py`, `infovox_host.py`, `_sapi4.py`), which are derived from NVDA's
+own SAPI 4 driver and stay under the GPL; the Infovox engine, rule sets, and
+voice data are included with permission; and the third-party components inside
+the original installer (Microsoft runtimes, CrypKey, InstallShield) remain under
+their own licenses and are included only as original installer materials.
 
 ## Credits
 

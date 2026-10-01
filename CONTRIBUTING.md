@@ -6,8 +6,11 @@ welcome.
 
 ## License
 
-The add-on code is **GPL v2** (see [`LICENSE`](LICENSE)). By contributing, you
-agree that your contributions are licensed under the same terms. The Infovox
+The code written for this project is **MIT** (see [`LICENSE`](LICENSE)). By
+contributing, you agree that your contributions are licensed under the same
+terms. The exceptions are the files derived from NVDA (the driver, the host and
+the SAPI 4 interface file, listed in [`NOTICE.md`](NOTICE.md)), which stay under
+the **GPL v2**; changes to those files are under the GPL v2. The Infovox
 engine is included with its maintainer's permission; the third-party binaries preserved from the
 original installer keep their own licenses.
 
@@ -47,6 +50,6 @@ voices before opening a PR.
 
 - Keep the driver 64-bit-safe and the host 32-bit-safe (it uses `comtypes`
   against the 32-bit engine).
-- Match the existing code style and keep the GPL headers intact.
+- Match the existing code style and keep the license headers intact.
 - Please don't commit rebuilt copies of the bundled binaries unless the change
   is intentional and explained in the PR.
