@@ -1142,7 +1142,19 @@ def cmd_serve(args):
                     if eng.audio.wfx:  # already known from a prior utterance
                         on_format(eng.audio.wfx)
                     cancel_evt.clear()
+                    # Engine.speak()'s default timeout is 30s, which is enough
+                    # for a short utterance but not for a long one: this old
+                    # engine is slow, and a long message (e.g. a multi-
+                    # paragraph chat message read by say-all) can genuinely
+                    # take longer than 30s to synthesize start to finish. When
+                    # that happens speak() gives up and returns only the PCM
+                    # produced so far, and the client is told the utterance is
+                    # done -- so speech appears to "just stop" partway through
+                    # with no error anywhere. Scale the timeout with the
+                    # length of the tagged text instead of using a fixed cap.
+                    speak_timeout = max(30.0, len(tagged) * 0.1)
                     pcm, wfx, marks = eng.speak(tagged, pump,
+                                                timeout=speak_timeout,
                                                 cancel_check=cancel_evt.is_set)
                     # Self-heal: a live engine that returns no audio (or never
                     # signals TextDataDone) for real text has gone bad. Rebuild
@@ -1159,7 +1171,8 @@ def cmd_serve(args):
                             eng.audio.on_pcm = on_pcm
                             eng.audio.on_format = on_format
                             pcm, wfx, marks = eng.speak(
-                                tagged, pump, cancel_check=cancel_evt.is_set)
+                                tagged, pump, timeout=speak_timeout,
+                                cancel_check=cancel_evt.is_set)
                             if not pcm:
                                 log.error("still silent after recycle")
                     if not cancel_evt.is_set():
