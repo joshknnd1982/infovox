@@ -853,7 +853,29 @@ class Engine:
         return True
 
     # -- speak tagged text, block until done, return (pcm, wfx, marks) --
-    def speak(self, tagged_text, pump, timeout=30.0, cancel_check=None):
+    def speak(self, tagged_text, pump, timeout=30.0, cancel_check=None,
+              stall_timeout=12.0):
+        """Block until the engine reports TextDataDone, cancellation is
+        requested, or synthesis stalls.
+
+        `timeout` used to be the only limit, computed by the caller as a
+        fixed budget for the whole utterance (originally 30s flat, later
+        scaled with text length). Either way it is a guess at how long
+        synthesis of THIS MUCH text will take -- and any such guess is wrong
+        for some text, just at a different length: a fixed-length utterance
+        budget always has a text long enough to exceed it. That is why
+        lengthening the budget only pushed the cutoff point back instead of
+        removing it.
+
+        The actual question that matters is not "how long has this taken"
+        but "is the engine still working". So the real limit here is
+        `stall_timeout`: how long we wait for *any new PCM byte* before
+        concluding the engine is stuck. As long as audio keeps arriving, no
+        matter how slowly, synthesis is allowed to continue -- there is no
+        total-time cap for a live utterance. `timeout` remains only as a
+        backstop against TextData itself never starting (e.g. the engine
+        wedged before producing anything), and can stay generous.
+        """
         self.audio.pcm = bytearray()
         self.audio.written = 0
         self.audio.marks = []
@@ -872,11 +894,24 @@ class Engine:
             ITTSBufNotifySink._iid_,
         )
         # pump the message queue until the engine signals TextDataDone, the
-        # client requests cancel, or we time out.
+        # client requests cancel, synthesis stalls, or the backstop fires.
         deadline = time.time() + timeout
+        last_written = self.audio.written
+        stall_deadline = time.time() + stall_timeout
         cancelled = False
+        stalled = False
         while not buf.done.is_set() and time.time() < deadline:
             pump()
+            if self.audio.written != last_written:
+                # Real progress: the engine is still producing audio, however
+                # long the utterance turns out to be. Push the stall deadline
+                # out again instead of letting it accumulate toward a total
+                # that was only ever a guess.
+                last_written = self.audio.written
+                stall_deadline = time.time() + stall_timeout
+            elif time.time() > stall_deadline:
+                stalled = True
+                break
             if cancel_check and cancel_check():
                 cancelled = True
                 try:
@@ -886,8 +921,14 @@ class Engine:
                 break
             time.sleep(0.002)
         self.last_ok = cancelled or buf.done.is_set()
-        if not self.last_ok:
-            log.warning("TextData timed out after %.1fs (no TextDataDone).", timeout)
+        if stalled:
+            log.warning(
+                "TextData stalled: no new audio for %.1fs (%d bytes produced "
+                "so far); treating the engine as stuck.",
+                stall_timeout, self.audio.written)
+        elif not self.last_ok:
+            log.warning("TextData timed out after %.1fs with no progress "
+                        "at all (no TextDataDone, 0 bytes produced).", timeout)
         wfx = self.audio.wfx
         # Prefer the audio-sink marks (correct byte offsets); fall back to the
         # buffer-sink marks if the engine used that channel instead.

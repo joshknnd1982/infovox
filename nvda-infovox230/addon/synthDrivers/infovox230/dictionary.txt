@@ -1,0 +1,22 @@
+# Infovox 230 pronunciation dictionary
+#
+# One entry per line: a word, a TAB character, then its replacement.
+# The replacement is what is actually sent to the speech engine, so write it
+# the way you want it SPOKEN (phonetically / spelled out), not the way it is
+# normally written. Matching is case-insensitive and whole-word only (so
+# "NVDA" will not also match inside "NVDAcontroller").
+#
+# Lines starting with # and blank lines are ignored. Changes take effect
+# after restarting NVDA (this file is read once, when NVDA starts speech).
+#
+# This plays the same role as eSpeak's "add word to user dictionary" feature
+# in NVDA, reimplemented as plain text substitution: Infovox 230's SAPI4
+# bridge does not expose a phoneme-level pronunciation hook, so the fix has
+# to happen on the text before it reaches the engine.
+#
+# Examples (remove the # to activate, or add your own below):
+#
+#NVDA	N V D A
+#ESP32	E S P drei zwei
+#WLAN	W Lan
+#GitHub	Gitt Hub
