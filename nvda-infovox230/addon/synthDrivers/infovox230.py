@@ -46,6 +46,14 @@ PKG_DIR = os.path.join(BASE_DIR, "infovox230")          # bundled payload
 ENGINE_DIR = os.path.join(PKG_DIR, "engine")            # engine DLLs + rules + sx32w.dll
 HOST_SCRIPT = os.path.join(PKG_DIR, "host", "infovox_host.py")
 PY32 = os.path.join(PKG_DIR, "python32", "python.exe")  # bundled 32-bit python
+#: User-editable pronunciation dictionary: plain whole-word substitutions
+#: applied to the text before it reaches the engine. This is the same idea
+#: as eSpeak's user dictionary in NVDA, reimplemented as text substitution
+#: because this bridge exposes no phoneme-level pronunciation hook into the
+#: Infovox engine itself. Lives outside synthDrivers/infovox230.py itself
+#: (in the bundled payload folder) so it survives an add-on update that only
+#: replaces the .py/.dll files, and so it is easy to find in Explorer.
+DICT_FILE = os.path.join(PKG_DIR, "dictionary.txt")
 PORT = 8765
 #: Ports tried in turn when (re)starting the host. A restarted host must not
 #: collide with the previous one still shutting down and holding the old port.
@@ -54,6 +62,104 @@ PORT_RANGE = 20
 #: the host as wedged. Longer than the host's own 30s TextData timeout so the
 #: host gets to self-heal first.
 STUCK_TIMEOUT = 35.0
+
+
+def _loadDictionary(path=DICT_FILE):
+    """Read the pronunciation dictionary: one entry per line, formatted as
+    'word<TAB>replacement'. Blank lines and lines starting with '#' are
+    ignored. Returns a list of (word, replacement) pairs in file order (so
+    later entries can still be written to depend on earlier ones having run,
+    though in practice entries are independent)."""
+    entries = []
+    if not os.path.exists(path):
+        return entries
+    try:
+        with open(path, encoding="utf-8") as f:
+            for lineno, line in enumerate(f, 1):
+                line = line.rstrip("\n").rstrip("\r")
+                if not line or line.lstrip().startswith("#"):
+                    continue
+                parts = line.split("\t")
+                if len(parts) != 2 or not parts[0] or not parts[1]:
+                    log.debugWarning(
+                        "infovox230: dictionary.txt line %d ignored "
+                        "(expected 'word<TAB>replacement')" % lineno)
+                    continue
+                entries.append((parts[0], parts[1]))
+    except Exception:
+        log.warning("infovox230: failed to read dictionary.txt", exc_info=True)
+        return []
+    return entries
+
+
+def _compileDictionary(entries):
+    import re
+    compiled = []
+    for word, repl in entries:
+        try:
+            pattern = re.compile(r"(?<!\w)%s(?!\w)" % re.escape(word), re.IGNORECASE)
+        except re.error:
+            continue
+        compiled.append((pattern, repl))
+    if compiled:
+        log.info("infovox230: loaded %d pronunciation dictionary entries" % len(compiled))
+    return compiled
+
+
+#: Compiled once at import time. The file is plain text a user can edit in
+#: Explorer/Notepad; changes take effect after NVDA is restarted (the add-on
+#: does not watch the file, to keep this simple and predictable).
+_DICT_PATTERNS = _compileDictionary(_loadDictionary())
+
+
+def _applyDictionary(text):
+    if not _DICT_PATTERNS:
+        return text
+    for pattern, repl in _DICT_PATTERNS:
+        text = pattern.sub(repl, text)
+    return text
+
+
+#: Maximum run of text handed to the engine with no sentence-ending
+#: punctuation in it. This 1990s/2000s engine keeps an internal per-sentence
+#: buffer and appears to crash the 32-bit host process outright -- not just
+#: answer slowly -- when given one giant run of text with no period/comma/etc
+#: to break on (observed: the host process's connection drops entirely after
+#: ~30s on a single very long sentence, with nothing logged, which is what a
+#: crash inside the engine's own native code looks like from the outside).
+#: A forced, practically inaudible break is inserted into any such run before
+#: it gets anywhere near that length, so the engine never sees more unbroken
+#: text than normal sentences would ever give it.
+MAX_UNBROKEN_RUN = 200
+_SENTENCE_ENDERS = ".!?;:\n"
+
+
+def _breakLongRuns(text, limit=MAX_UNBROKEN_RUN):
+    """Insert a forced, near-silent break (\\Pau=1\\) into any run of `limit`
+    characters or more that contains no sentence-ending punctuation, so the
+    engine is never handed an unbroken run longer than this. Breaks land on
+    the nearest preceding whitespace so no word is split; a run with no
+    whitespace at all (one giant word) is split mid-word as a last resort
+    rather than left unbroken."""
+    if len(text) < limit:
+        return text
+    out = []
+    run_start = 0   # start of the current run with no sentence ender in it
+    last_break = 0  # start of text not yet appended to `out`
+    for i, ch in enumerate(text):
+        if ch in _SENTENCE_ENDERS:
+            run_start = i + 1
+            continue
+        if i - run_start >= limit:
+            split_at = text.rfind(" ", run_start, i + 1)
+            if split_at <= run_start:
+                split_at = i  # no whitespace in this run; split here anyway
+            out.append(text[last_break:split_at])
+            out.append("\\Pau=1\\")
+            last_break = split_at
+            run_start = split_at
+    out.append(text[last_break:])
+    return "".join(out)
 
 
 def _find_python32():
@@ -634,7 +740,8 @@ class SynthDriver(SynthDriver):
         parts = []
         for item in speechSequence:
             if isinstance(item, str):
-                parts.append(item.replace("\\", "\\\\"))
+                escaped = _applyDictionary(item).replace("\\", "\\\\")
+                parts.append(_breakLongRuns(escaped))
             elif isinstance(item, IndexCommand):
                 parts.append("\\mrk=%d\\" % item.index)
             elif isinstance(item, CharacterModeCommand):
